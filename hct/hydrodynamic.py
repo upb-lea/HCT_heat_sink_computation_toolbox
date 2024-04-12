@@ -64,7 +64,8 @@ def calc_f_app(geometry: Geometry, constants: Constants, volume_flow_v_dot: floa
     :param f_re_sqrt_a:
     :return: Apparent friction factor for the average duct hydraulic parameter.
     """
-    f_app_v_dot = geometry.number_fins_n * constants.fluid_viscosity_air * np.sqrt(geometry.height_c * geometry.fin_distance_s) * f_re_sqrt_a / volume_flow_v_dot
+    f_app_v_dot = (geometry.number_fins_n * constants.fluid_viscosity_air * \
+                   np.sqrt(geometry.height_c * geometry.fin_distance_s) * f_re_sqrt_a / volume_flow_v_dot)
     return f_app_v_dot
 
 def calc_delta_p_duct(f_app_duct: float, l_duct: float, mean_d_h_duct: float, constants: Constants, mean_u_duct: float):
@@ -130,6 +131,7 @@ def calc_epsilon_duct(geometry: Geometry):
     epsilon_duct = (geometry.width_b + geometry.height_c) / 2 / geometry.height_c
     return epsilon_duct
 
+
 def calc_mean_u_hs(geometry: Geometry, volume_flow_v_dot: float):
     """
     Calculate the average velocity inside the heat sink.
@@ -141,6 +143,7 @@ def calc_mean_u_hs(geometry: Geometry, volume_flow_v_dot: float):
     u_hs_v_dot = volume_flow_v_dot / geometry.number_fins_n / geometry.fin_distance_s / geometry.height_c
     return u_hs_v_dot
 
+
 def calc_mean_u_duct(geometry: Geometry, volume_flow_v_dot: float):
     """
     Calculate the average velocity inside the air duct.
@@ -151,6 +154,7 @@ def calc_mean_u_duct(geometry: Geometry, volume_flow_v_dot: float):
     """
     mean_u_duct = volume_flow_v_dot / geometry.width_b / geometry.height_c
     return mean_u_duct
+
 
 def calc_delta_p_acc(geometry: Geometry, volume_flow_v_dot: float, constants: Constants):
     """
@@ -165,6 +169,7 @@ def calc_delta_p_acc(geometry: Geometry, volume_flow_v_dot: float, constants: Co
     part_ii = constants.rho_air / 2 * volume_flow_v_dot ** 2
     delta_p_acc = part_i * part_ii
     return delta_p_acc
+
 
 def compare_fan_data() -> None:
     """
@@ -194,11 +199,11 @@ def read_fan_data(filepath: str):
     fan_data = pd.read_csv(filepath, delimiter=';', decimal=',')
     fan_data = fan_data.to_numpy()
 
-    fan_cfm = fan_data[:,0]
+    fan_cfm = fan_data[:, 0]
     fan_inch_h2o = fan_data[:, 1]
 
     # set first x-value close to zero
-    #fan_cfm[0] = 1e-12
+    # fan_cfm[0] = 1e-12
     # set last y-value to zero
     fan_inch_h2o[-1] = 0
 
@@ -263,7 +268,8 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False):
         result_list_delta_p_heat_sink.append(delta_p_heat_sink)
         result_list_delta_p_total.append(delta_p_total)
 
-    fan_cubic_meter_second, result_list_delta_p_total, fan_pressure_drop_pascal, intersection_volume_flow, intersection_pressure = calculate_intersection(fan_cubic_meter_second, result_list_delta_p_total, fan_pressure_drop_pascal)
+    fan_cubic_meter_second, result_list_delta_p_total, fan_pressure_drop_pascal, intersection_volume_flow, intersection_pressure = calculate_intersection(
+        fan_cubic_meter_second, result_list_delta_p_total, fan_pressure_drop_pascal)
 
     if plot:
         plt.plot(fan_cubic_meter_second, np.array(result_list_delta_p_total), label='delta p total')
@@ -304,15 +310,15 @@ def calculate_intersection(x_list, y1_list, y2_list):
 
     return x_list, y1_list, y2_list, x_intersection, y_intersection
 
+
 if __name__ == '__main__':
 
     compare_fan_data()
 
-    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5, thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
-    #geometry = Geometry(height_c=0.06912594942874409, width_b=0.0524481960121949, length_l=0.12146487065090192, height_d=0.002035939997471404, number_fins_n=12,            thickness_fin_t=0.0014679318316491727, fin_distance_s=0.0027804235167296376)
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5, thickness_fin_t=1e-3,
+                        fin_distance_s=0, alpha_rad=np.deg2rad(40))
 
     for (_, _, fan_name_list) in os.walk('data/'):
         for fan_name in fan_name_list:
             # fan_name = 'orion_od4010hh.csv'
             calc_volume_flow(fan_name, geometry, plot=True)
-

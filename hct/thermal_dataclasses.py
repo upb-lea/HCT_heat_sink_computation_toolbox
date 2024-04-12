@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from typing import List
 
+
 @dataclass
 class Geometry:
     """Define a single heat sink geometry."""
@@ -15,7 +16,6 @@ class Geometry:
     thickness_fin_t: float
     fin_distance_s: float
     alpha_rad: float
-
 
 
 @dataclass
@@ -48,6 +48,7 @@ class OptimizationParameters:
     thickness_fin_t_list: List
     fan_list: List
     t_ambient: float
+
 
 @dataclass
 class FanData:

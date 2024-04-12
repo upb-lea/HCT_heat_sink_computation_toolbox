@@ -1,7 +1,8 @@
 """
 Implementation of the thermal model according to a given paper.
 
-Christoph Gammeter, Florian Krismer, Johann Kolar: 'Weight Optimization of a Cooling System Composed of Fan and Extruded Fin Heat Sink'
+Christoph Gammeter, Florian Krismer, Johann Kolar:
+'Weight Optimization of a Cooling System Composed of Fan and Extruded Fin Heat Sink'
 """
 # 3rd party libraries
 import numpy as np
@@ -33,7 +34,8 @@ def calculate_r_th_sa_part_ii(constants: Constants, volume_flow_v_dot: float, he
     :param a_eff_fin: effective fine area
     :return: heat sink conventional cooling part.
     """
-    denominator = constants.rho_air * constants.c_air * volume_flow_v_dot * (1 - np.e ** (-heat_transfer_coefficient_h * a_eff_fin / constants.rho_air / constants.c_air / volume_flow_v_dot))
+    denominator = (constants.rho_air * constants.c_air * volume_flow_v_dot * \
+                   (1 - np.e ** (-heat_transfer_coefficient_h * a_eff_fin / constants.rho_air / constants.c_air / volume_flow_v_dot)))
     r_th_sa_part_ii = 1 / denominator
     return r_th_sa_part_ii
 
@@ -57,8 +59,10 @@ def calc_fin_efficiency(geometry: Geometry, constants: Constants, heat_transfer_
     :param heat_transfer_coefficient_h: heat transfer coefficient
     :return: fin efficiency
     """
-    nominator = np.tanh(np.sqrt(heat_transfer_coefficient_h * 2 * (geometry.thickness_fin_t + geometry.length_l) / (constants.lambda_material * geometry.thickness_fin_t * geometry.length_l)) * geometry.height_c)
-    denominator = np.sqrt(heat_transfer_coefficient_h * 2 * (geometry.thickness_fin_t + geometry.length_l) / (constants.lambda_material * geometry.thickness_fin_t * geometry.length_l)) * geometry.height_c
+    nominator = np.tanh(np.sqrt(heat_transfer_coefficient_h * 2 * (geometry.thickness_fin_t + geometry.length_l) / \
+                                (constants.lambda_material * geometry.thickness_fin_t * geometry.length_l)) * geometry.height_c)
+    denominator = np.sqrt(heat_transfer_coefficient_h * 2 * (geometry.thickness_fin_t + geometry.length_l) / \
+                          (constants.lambda_material * geometry.thickness_fin_t * geometry.length_l)) * geometry.height_c
     fin_efficiency = nominator / denominator
     return fin_efficiency
 
@@ -106,8 +110,7 @@ def init_constants() -> Constants:
 
     return Constants(c_1=3.24, c_2=1.5, c_3=0.409, c_4=2.0, gamma=-0.3,
                      rho_air=1.293, c_air=1005, lambda_air=0.0261, fluid_viscosity_air=18.2e-6,
-                     lambda_material=210, rho_material = 2699, k_venturi=0.2)
-
+                     lambda_material=210, rho_material=2699, k_venturi=0.2)
 
 
 def calc_blending_m(prandtl_number: float) -> float:
@@ -208,7 +211,8 @@ def calc_friction_factor_reynolds_product(geometry: Geometry, volume_flow_v_dot:
     :param friction_factor_reynolds_product_fd:
     :return:
     """
-    friction_factor_reynolds_product = (11.8336 * volume_flow_v_dot / (geometry.length_l * geometry.number_fins_n * constants.fluid_viscosity_air) + friction_factor_reynolds_product_fd ** 2) ** 0.5
+    friction_factor_reynolds_product = (11.8336 * volume_flow_v_dot / (geometry.length_l * geometry.number_fins_n * constants.fluid_viscosity_air) + \
+                                        friction_factor_reynolds_product_fd ** 2) ** 0.5
     return friction_factor_reynolds_product
 
 def calc_friction_factor_reynolds_product_fd(epsilon: float):
@@ -391,12 +395,13 @@ def calc_weight_heat_sink(geometry: Geometry, constants: Constants) -> float:
 
 if __name__ == "__main__":
     constants = init_constants()
-    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5, thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
+                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
     print(geometry)
 
     # plot parameter
-    volume_flow_v_dot_list = np.linspace(1e-3,15e-3)
+    volume_flow_v_dot_list = np.linspace(1e-3, 15e-3)
 
     result_list_r_th_sa = []
 
@@ -408,7 +413,7 @@ if __name__ == "__main__":
     paper_comparison = pd.read_csv('paper_r_th_model.csv', delimiter=';', decimal=',')
     paper_comparison = paper_comparison.to_numpy()
     print(paper_comparison)
-    plt.plot(paper_comparison[:,0], paper_comparison[:,1], label='paper')
+    plt.plot(paper_comparison[:, 0], paper_comparison[:, 1], label='paper')
     plt.plot(volume_flow_v_dot_list, result_list_r_th_sa, label='calculation')
     plt.xlabel('Volume flow')
     plt.ylabel('R_th,sa (K/W)')

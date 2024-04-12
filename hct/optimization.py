@@ -6,12 +6,12 @@ import os
 # 3rd party libaries
 import optuna
 import numpy as np
-from matplotlib import pyplot as plt
 
 # package libraries
 from hct.thermal_dataclasses import *
 from hct.cooling_system import *
 from hct.hydrodynamic import *
+
 
 def objective(trial, config: OptimizationParameters):
     """
@@ -30,9 +30,10 @@ def objective(trial, config: OptimizationParameters):
     number_fins_n = trial.suggest_int("number_fins_n", config.number_fins_n_list[0], config.number_fins_n_list[1])
 
     constants = init_constants()
-    geometry = Geometry(height_c=height_c, height_d=height_d, length_l=length_l, width_b=width_b, number_fins_n=number_fins_n, thickness_fin_t=thickness_fin_t, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+    geometry = Geometry(height_c=height_c, height_d=height_d, length_l=length_l, width_b=width_b, number_fins_n=number_fins_n,
+                        thickness_fin_t=thickness_fin_t, fin_distance_s=0, alpha_rad=np.deg2rad(40))
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
-    if geometry.fin_distance_s <=0.1e-3:
+    if geometry.fin_distance_s <= 0.1e-3:
         return float('nan'), float('nan')
 
     try:

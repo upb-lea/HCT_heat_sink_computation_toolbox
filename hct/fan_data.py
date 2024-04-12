@@ -66,5 +66,4 @@ fan_database = {
     "orion_od6038xchh": FanData("orion", "od6038xchh", width_height=60e-3, length=38e-3),
     "orion_od6038xch": FanData("orion", "od6038xch", width_height=60e-3, length=38e-3),
     "orion_od6038xcl": FanData("orion", "od6038xcl", width_height=60e-3, length=38e-3),
-
 }
