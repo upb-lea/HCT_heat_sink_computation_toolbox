@@ -224,7 +224,9 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False):
     :param plot: True to show a visual output.
     :return: intersection_volume_flow, intersection_pressure
     """
-    fan_cubic_meter_second, fan_pressure_drop_pascal = read_fan_data(f'data/{fan_name}')
+    fan_directory = os.path.join(os.path.dirname(__file__), "data", fan_name)
+
+    fan_cubic_meter_second, fan_pressure_drop_pascal = read_fan_data(fan_directory)
 
     # calculate static pressure of system
     constants = init_constants()

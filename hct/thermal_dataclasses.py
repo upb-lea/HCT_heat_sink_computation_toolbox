@@ -58,3 +58,12 @@ class FanData:
     type: str
     width_height: float
     length: float
+
+@dataclass
+class SpreadingMaterial:
+    """Define the heat spreading material."""
+
+    lambda_conductivity: float
+    thickness_d: float
+    heat_source_area_a_s: float
+    spreading_material_area_a_sp: float
