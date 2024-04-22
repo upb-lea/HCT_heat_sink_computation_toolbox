@@ -52,9 +52,42 @@ def test_heat_spreading_workflow():
 
     assert r_th_sp == 0.10359485058699519
 
+def test_calc_boxed_volume_heat_sink():
+    """Unit test to calculate the boxed heat sink volume."""
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
+                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+    volume = calc_boxed_volume_heat_sink(geometry)
 
-if __name__ == '__main__':
-    test_full_cooling_system_workflow()
-    test_full_hydrodynamic_workflow()
-    test_calculate_intersection()
-    test_heat_spreading_workflow()
+    volume_check = 100e-3 * 40e-3 * (3e-3 + 30e-3)
+
+    assert volume_check == volume
+
+def test_calc_fan_volume():
+    """Unit test to calculate the fan volume."""
+    fan_volume = calc_fan_volume("orion_od4010l")
+
+    volume_check = 40e-3 * 40e-3 * 10e-3
+
+    assert fan_volume == volume_check
+
+def test_duct_volume_1():
+    """Test the calculation of the duct volume."""
+    fan_name = "orion_od4010l"
+
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
+                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+
+    duct_volume = calc_duct_volume(geometry, fan_name, l_duct_min=10e-3)
+
+    print(duct_volume)
+
+    assert 1.9232341936182356e-05 == duct_volume
+
+# def test_duct_volume_2():
+#    fan_name  "orion_od4010l"
+#    geometry = Geometry(length_l=100e-3, width_b=50e-3, height_d=3e-3, height_c=50e-3, number_fins_n=5,
+#                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+#
+#    duct_volume = calc_duct_volume(geometry, fan_name, l_duct_min=10e-3)
+#
+#    print(duct_volume)
