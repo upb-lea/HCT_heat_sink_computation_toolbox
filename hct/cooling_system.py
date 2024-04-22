@@ -133,7 +133,10 @@ def calc_epsilon(geometry: Geometry) -> float:
     :param geometry: heat sink geometry.
     :return: epsilon shape factor from the fin geometry.
     """
-    epsilon = geometry.fin_distance_s / geometry.height_c
+    if geometry.fin_distance_s < geometry.height_c:
+        epsilon = geometry.fin_distance_s / geometry.height_c
+    else:
+        epsilon = geometry.height_c / geometry.fin_distance_s
     return epsilon
 
 def calc_hs_shape_z_star(geometry: Geometry, constants: Constants, prandtl_number: float, volume_flow_v_dot: float):
