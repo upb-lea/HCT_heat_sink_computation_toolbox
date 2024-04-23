@@ -14,7 +14,7 @@ def test_full_cooling_system_workflow():
     assert r_th_sa == 0.46442982872906496
 
 def test_full_hydrodynamic_workflow():
-    """Ingetration test for the full hydrodynamic workflow."""
+    """Integration test for the full hydrodynamic workflow."""
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
     geometry.fin_distance_s = calc_fin_distance_s(geometry)

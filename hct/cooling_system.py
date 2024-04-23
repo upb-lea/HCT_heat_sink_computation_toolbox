@@ -338,7 +338,7 @@ def calc_fan_volume(fan_name: str):
     fan_volume = fan_data.width_height ** 2 * fan_data.length
     return fan_volume
 
-def calc_duct_volume(geometry: Geometry, fan_name: str, l_duct_min: float = 10e-3):
+def calc_duct_volume(geometry: Geometry, fan_name: str, l_duct_min: float = 5e-3):
     """
     Calculate the volume of the duct.
 
