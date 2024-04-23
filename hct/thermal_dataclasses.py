@@ -58,6 +58,8 @@ class FanData:
     type: str
     width_height: float
     length: float
+    weight: float
+    datasheet: str
 
 @dataclass
 class SpreadingMaterial:
