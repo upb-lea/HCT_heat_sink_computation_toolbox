@@ -6,7 +6,10 @@ from typing import List
 
 @dataclass
 class Geometry:
-    """Define a single heat sink geometry."""
+    """Define a single heat sink geometry.
+
+    l_duct_min: minimum length of the air duct.
+    """
 
     height_c: float
     width_b: float
@@ -16,6 +19,7 @@ class Geometry:
     thickness_fin_t: float
     fin_distance_s: float
     alpha_rad: float
+    l_duct_min: float
 
 
 @dataclass

@@ -5,7 +5,7 @@ def test_full_cooling_system_workflow():
     """Integration test for the full cooling system workflow."""
     constants = init_constants()
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
-                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
     volume_flow_v_dot = 0.014
 
@@ -16,7 +16,7 @@ def test_full_cooling_system_workflow():
 def test_full_hydrodynamic_workflow():
     """Integration test for the full hydrodynamic workflow."""
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
-                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
 
     fan_name = 'orion_od4010m.csv'
@@ -45,7 +45,7 @@ def test_heat_spreading_workflow():
                                            thickness_d=thickness)
 
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=thickness, height_c=30e-3, number_fins_n=5,
-                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
 
     r_th_sp = calc_r_th_sp(spreading_material, r_th_zero)
@@ -55,7 +55,7 @@ def test_heat_spreading_workflow():
 def test_calc_boxed_volume_heat_sink():
     """Unit test to calculate the boxed heat sink volume."""
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
-                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     volume = calc_boxed_volume_heat_sink(geometry)
 
     volume_check = 100e-3 * 40e-3 * (3e-3 + 30e-3)
@@ -75,9 +75,9 @@ def test_duct_volume_1():
     fan_name = "orion_od4010l"
 
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
-                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
 
-    duct_volume = calc_duct_volume(geometry, fan_name, l_duct_min=10e-3)
+    duct_volume = calc_duct_volume(geometry, fan_name)
 
     print(duct_volume)
 

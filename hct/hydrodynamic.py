@@ -111,20 +111,19 @@ def calc_mean_d_h_duct(geometry: Geometry):
     """
     return 2 * geometry.width_b * (geometry.width_b + geometry.height_c) / (3 * geometry.width_b + geometry.height_c)
 
-def calc_l_duct(geometry: Geometry, l_duct_min: float = 5e-3):
+def calc_l_duct(geometry: Geometry):
     """
     Calculate the length of the air duct.
 
     :param geometry: Geometry
-    :param l_duct_min: minimum length of the air duct.
     :return: Length of the air duct.
     """
     l_duct = (geometry.width_b - geometry.height_c) / 2 / np.tan(geometry.alpha_rad)
 
     if l_duct < 0:
         raise ValueError("Fan too small.")
-    elif l_duct < l_duct_min:
-        l_duct = l_duct_min
+    elif l_duct < geometry.l_duct_min:
+        l_duct = geometry.l_duct_min
     return l_duct
 
 def calc_epsilon_duct(geometry: Geometry):
@@ -324,7 +323,7 @@ if __name__ == '__main__':
     compare_fan_data()
 
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5, thickness_fin_t=1e-3,
-                        fin_distance_s=0, alpha_rad=np.deg2rad(40))
+                        fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
 
     for (_, _, fan_name_list) in os.walk('data/'):
         for fan_name in fan_name_list:

@@ -338,7 +338,7 @@ def calc_fan_volume(fan_name: str):
     fan_volume = fan_data.width_height ** 2 * fan_data.length
     return fan_volume
 
-def calc_duct_volume(geometry: Geometry, fan_name: str, l_duct_min: float = 5e-3):
+def calc_duct_volume(geometry: Geometry, fan_name: str):
     """
     Calculate the volume of the duct.
 
@@ -346,7 +346,6 @@ def calc_duct_volume(geometry: Geometry, fan_name: str, l_duct_min: float = 5e-3
     In case of a too small duct, the minimum duct length is taken.
     :param geometry: Geometry
     :param fan_name: with or without '.csv', e.g. 'orion_od4010h' or 'orion_od4010h.csv'
-    :param l_duct_min: minimum duct length.
     :return: duct volume in m³
     """
     fan_data = fan_database[fan_name.replace('.csv', '')]
@@ -360,14 +359,10 @@ def calc_duct_volume(geometry: Geometry, fan_name: str, l_duct_min: float = 5e-3
 
     l_duct = distance_fan - distance_heat_sink
 
-    print(f"{distance_fan = }")
-    print(f"{distance_heat_sink = }")
-    print(f"{l_duct = }")
-
     if l_duct < 0:
         raise ValueError("Fan too small.")
-    elif l_duct < l_duct_min:
-        l_duct = l_duct_min
+    elif l_duct < geometry.l_duct_min:
+        l_duct = geometry.l_duct_min
 
     duct_volume = (fan_data.width_height + geometry.width_b) / 2 * (fan_data.width_height + geometry.height_c) / 2 * l_duct
     return duct_volume
@@ -407,7 +402,7 @@ def calc_weight_heat_sink(geometry: Geometry, constants: Constants) -> float:
 if __name__ == "__main__":
     constants = init_constants()
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
-                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
     print(geometry)
 

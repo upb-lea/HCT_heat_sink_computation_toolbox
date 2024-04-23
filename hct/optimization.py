@@ -31,7 +31,7 @@ def objective(trial, config: OptimizationParameters):
 
     constants = init_constants()
     geometry = Geometry(height_c=height_c, height_d=height_d, length_l=length_l, width_b=width_b, number_fins_n=number_fins_n,
-                        thickness_fin_t=thickness_fin_t, fin_distance_s=0, alpha_rad=np.deg2rad(40))
+                        thickness_fin_t=thickness_fin_t, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
     if geometry.fin_distance_s <= 0.1e-3:
         return float('nan'), float('nan')
