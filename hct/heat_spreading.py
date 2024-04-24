@@ -99,7 +99,7 @@ def calc_phi_c(tau: float, sigma_c: float, biot_number: float) -> float:
     phi_c = nominator / denominator
     return phi_c
 
-def calc_r_th_sp(spreading_material: SpreadingMaterial, r_th_zero: float):
+def calc_r_th_sp(spreading_material: SpreadingMaterial, r_th_zero: float) -> float:
     """
     Calculate the r_th_sp for the spreading material.
 
@@ -126,14 +126,11 @@ def calc_r_th_sp(spreading_material: SpreadingMaterial, r_th_zero: float):
     return r_th_sp
 
 
-if __name__ == '__main__':
-    constants = init_constants()
-
+def verify_with_phd_thesis_gammeter() -> None:
+    """Verify with figure 3.18 (page 149), Ph.D. thesis Gammeter."""
     r_th_zero = 1
     thickness_list = np.linspace(0.1e-3, 1.0e-3)
 
-    result_list_r_m = []
-    result_list_r_f = []
     result_list_r_th_sp = []
 
     for thickness in thickness_list:
@@ -151,3 +148,7 @@ if __name__ == '__main__':
     plt.grid()
     plt.legend()
     plt.show()
+
+
+if __name__ == '__main__':
+    verify_with_phd_thesis_gammeter()

@@ -280,9 +280,9 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False):
 
     if plot:
         plt.plot(fan_cubic_meter_second, np.array(result_list_delta_p_total), label='delta p total')
-        plt.plot(fan_cubic_meter_second, fan_pressure_drop_pascal)
+        plt.plot(fan_cubic_meter_second, fan_pressure_drop_pascal, label=f'{fan_name}')
         plt.plot(intersection_volume_flow, intersection_pressure, 'ro')
-        plt.xlabel('volume flow')
+        plt.xlabel('volume flow im m³/s')
         plt.ylabel('pressure drop delta p in Pa')
         plt.grid()
         plt.legend()
