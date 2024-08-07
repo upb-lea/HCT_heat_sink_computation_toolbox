@@ -100,7 +100,7 @@ def calc_f_app_duct(constants: Constants, geometry: Geometry, volume_flow_v_dot:
         raise ValueError("negative part")
     f_app_duct_v_dot = part_i * (part_ii + f_re_sqrt_a_fd ** 2) ** 0.5
     if np.isnan(f_app_duct_v_dot) or f_app_duct_v_dot < 0:
-        raise ValueError(f"{f_app_duct_v_dot = }, bus should be a positive float.")
+        raise ValueError(f"{f_app_duct_v_dot=}, bus should be a positive float.")
     return f_app_duct_v_dot
 
 def calc_mean_d_h_duct(geometry: Geometry):
