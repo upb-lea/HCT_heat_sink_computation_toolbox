@@ -19,6 +19,10 @@ cd HCT_heat_sink_computation_toolbox/
 pip install -e .
 ```
 
+## Usage and examples
+Check out the examples in [this directory](examples/). 
+
+
 ## Literature
 This toolbox implements the thermal basics according to the following paper:
 ```

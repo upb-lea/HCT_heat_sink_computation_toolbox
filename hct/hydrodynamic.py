@@ -14,6 +14,7 @@ import os
 # hct libraries
 from hct.thermal_dataclasses import *
 from hct.cooling_system import *
+from hct.generalplotsettings import *
 
 def calc_delta_p_heat_sink(f_app: float, k_se, k_sc, constants: Constants, geometry: Geometry, d_h: float, mean_u_hs: float):
     """
@@ -279,11 +280,11 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False):
         fan_cubic_meter_second, result_list_delta_p_total, fan_pressure_drop_pascal)
 
     if plot:
-        plt.plot(fan_cubic_meter_second, np.array(result_list_delta_p_total), label='delta p total')
-        plt.plot(fan_cubic_meter_second, fan_pressure_drop_pascal, label=f'{fan_name}')
+        plt.plot(fan_cubic_meter_second, np.array(result_list_delta_p_total), label=r'Heat sink')
+        plt.plot(fan_cubic_meter_second, fan_pressure_drop_pascal, label=f'Fan: {fan_name.replace('.csv', '')}')
         plt.plot(intersection_volume_flow, intersection_pressure, 'ro')
-        plt.xlabel('volume flow im m³/s')
-        plt.ylabel('pressure drop delta p in Pa')
+        plt.xlabel('Volume flow im m³/s')
+        plt.ylabel(r'Pressure drop $\Delta p$ in Pa')
         plt.grid()
         plt.legend()
         plt.show()
@@ -319,6 +320,8 @@ def calculate_intersection(x_list, y1_list, y2_list):
 
 
 if __name__ == '__main__':
+
+    # global_plot_settings_font_latex()
 
     compare_fan_data()
 
