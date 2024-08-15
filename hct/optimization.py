@@ -17,12 +17,15 @@ from hct.generalplotsettings import *
 class Optimization:
     """Optuna optimization for heatsink and fan optimization."""
 
-    def objective(trial, config: OptimizationParameters):
+    @staticmethod
+    def objective(trial: optuna.Trial, config: OptimizationParameters) -> list:
         """
         Objective for the optimization with optuna.
 
         :param trial: optuna input suggestions
-        :param config: optimization configuration
+        :type trial: optuna.Trial
+        :param config: optimization configuration according to OptimizationParameters class
+        :type config: OptimizationParameters
         :return: total_volume, r_th_sa in case of success, nan,nan in case of unrealistic geometry parameters
         """
         fan_name = trial.suggest_categorical("fan", config.fan_list)
@@ -55,7 +58,7 @@ class Optimization:
             return float('nan'), float('nan')
 
     @staticmethod
-    def start_proceed_study(study_name: str, config, working_directory, number_trials: int,
+    def start_proceed_study(study_name: str, config, working_directory: str, number_trials: int,
                             storage: str = 'sqlite',
                             sampler=optuna.samplers.NSGAIIISampler(),
                             ) -> None:
@@ -69,6 +72,10 @@ class Optimization:
         :type storage: str
         :param sampler: optuna.samplers.NSGAIISampler() or optuna.samplers.NSGAIIISampler(). Note about the brackets () !! Default: NSGAIII
         :type sampler: optuna.sampler-object
+        :param working_directory: working directory
+        :type working_directory: str
+        :param config: configuration according to OptimizationParameters class
+        :type config: OptimizationParameters
         """
         if os.path.exists(f"{working_directory}/study_{study_name}.sqlite3"):
             print("Existing study found. Proceeding.")
@@ -122,10 +129,13 @@ class Optimization:
 
     @staticmethod
     def df_plot_pareto_front(df: pd.DataFrame, figure_size: tuple):
-        """Plot an interactive Pareto diagram (losses vs. volume) to select the transformers to re-simulate.
+        """
+        Plot an interactive Pareto diagram (losses vs. volume) to select the transformers to re-simulate.
 
         :param df: Dataframe, generated from an optuna study (exported by optuna)
         :type df: pd.Dataframe
+        :param figure_size: figures size as a x/y-tuple in mm, e.g. (160, 80)
+        :type figure_size: tuple
         """
         print(df.head())
 

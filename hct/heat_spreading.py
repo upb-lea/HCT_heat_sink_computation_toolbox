@@ -19,8 +19,8 @@ def calc_r_th_m(heat_spreading_material: SpreadingMaterial) -> float:
     """
     Calculate the R_th,d (heatsink baseplate).
 
-    :param geometry: geometry parameters
-    :param constants: material parameters
+    :param heat_spreading_material: heat preading material according to SpreadingMaterial class
+    :type heat_spreading_material: SpreadingMaterial
     :return: r_th_d in K/W
     """
     r_th_d = heat_spreading_material.thickness_d / (heat_spreading_material.spreading_material_area_a_sp * heat_spreading_material.lambda_conductivity)

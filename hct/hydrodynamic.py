@@ -16,18 +16,27 @@ from hct.thermal_dataclasses import *
 from hct.cooling_system import *
 from hct.generalplotsettings import *
 
-def calc_delta_p_heat_sink(f_app: float, k_se, k_sc, constants: Constants, geometry: Geometry, d_h: float, mean_u_hs: float):
+def calc_delta_p_heat_sink(f_app: float, k_se: float, k_sc: float, constants: Constants,
+                           geometry: Geometry, d_h: float, mean_u_hs: float) -> float:
     """
     Calculate the pressure drop of the heat sink.
 
     :param f_app: apparent friction factor for viscous fluid flow in ducts
+    :type f_app: float
     :param k_se: friction factor for sudden contraction
+    :type k_se: float
     :param k_sc: friction factor for sudden expansion
+    :type k_sc: float
     :param constants: Constants.
+    :type constants: Constants
     :param geometry: Geometry.
+    :type geometry: Geometry
     :param d_h:
+    :type d_h: float
     :param mean_u_hs: average velocity inside the heat sink
+    :type mean_u_hs: float
     :return: delta_p_heat_sink in Pacal (Pa).
+    :rtype: float
     """
     part_i = f_app * geometry.length_l / d_h + k_se + k_sc
     part_ii = constants.rho_air / 2 * mean_u_hs ** 2
@@ -74,9 +83,15 @@ def calc_delta_p_duct(f_app_duct: float, l_duct: float, mean_d_h_duct: float, co
     Calculate the duct static pressure drop.
 
     :param f_app_duct: apparent friction factor for viscous fluid flow in the air duct
+    :type f_app_duct: flaot
     :param l_duct: lenght of the air duct
+    :type l_duct: float
     :param mean_u_duct: average velocity inside the heat sink
+    :type mean_u_duct: float
     :param mean_d_h_duct: average velocity inside the air duct
+    :type mean_d_h_duct: float
+    :param constants: constants according to the Constants class
+    :type constants: Constants
     :return: pressure difference of the air duct in Pascal (Pa)
     """
     part_i = f_app_duct * l_duct / mean_d_h_duct / 4 + constants.k_venturi
@@ -84,14 +99,18 @@ def calc_delta_p_duct(f_app_duct: float, l_duct: float, mean_d_h_duct: float, co
     delta_p_duct = part_i * part_ii
     return delta_p_duct
 
-def calc_f_app_duct(constants: Constants, geometry: Geometry, volume_flow_v_dot: float, f_re_sqrt_a_fd):
+def calc_f_app_duct(constants: Constants, geometry: Geometry, volume_flow_v_dot: float, f_re_sqrt_a_fd: float):
     """
     Calculate the apparent friction factor for the average duct hydraulic diameter.
 
     :param constants: Constants
+    :type constants: Constants
     :param geometry: Geometry
+    :type geometry: Geometry
     :param volume_flow_v_dot: Volume flow in m³/s
+    :type volume_flow_v_dot: float
     :param f_re_sqrt_a_fd: f_re_sqrt_a_fd
+    :type f_re_sqrt_a_fd: float
     :return: Apparent friction factor for the average duct hydraulic diameter.
     """
     part_i = constants.fluid_viscosity_air * np.sqrt(geometry.width_b * (geometry.width_b + geometry.height_c)) / np.sqrt(2) / volume_flow_v_dot
@@ -178,11 +197,7 @@ def calc_delta_p_acc(geometry: Geometry, volume_flow_v_dot: float, constants: Co
 
 
 def compare_fan_data() -> None:
-    """
-    Plot all available fan data for comparison.
-
-    :return: None
-    """
+    """Plot all available fan data for comparison."""
     for (_, _, file_name_list) in os.walk('data/'):
         for file_name in file_name_list:
             fan_cubic_meter_second, fan_pressure_drop_pascal = read_fan_data(f'data/{file_name}')
@@ -291,15 +306,18 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False):
 
     return intersection_volume_flow, intersection_pressure
 
-def calculate_intersection(x_list, y1_list, y2_list):
+def calculate_intersection(x_list: list, y1_list: list, y2_list: list):
     """
     Calculate the intersection between two graphs (x_list, y1_list) and (x_list, y2_list).
 
     The return are both lists (x_list, y1_list) and (x_list, y2_list) added by the intersection points
     as well as the intersection point itself.
     :param x_list: common x-coordinates of the two graphs
+    :type x_list: list
     :param y1_list: y-coordinates of graph 1
+    :type y1_list: list
     :param y2_list: y-coordinates of graph 2
+    :type y2_list: list
     :return: x_list, y1_list, y2_list (lists are complemented by the intersection point), x_intersection, y_intersection
     """
     [intersection_index] = np.argwhere(np.diff(np.sign(y1_list - y2_list))).flatten()

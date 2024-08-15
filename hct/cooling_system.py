@@ -50,13 +50,16 @@ def calc_effective_fin_surface(eta_fin: float, geometry: Geometry) -> float:
     a_eff_fin = geometry.number_fins_n * (2 * geometry.height_c * eta_fin + geometry.fin_distance_s) * geometry.length_l
     return a_eff_fin
 
-def calc_fin_efficiency(geometry: Geometry, constants: Constants, heat_transfer_coefficient_h) -> float:
+def calc_fin_efficiency(geometry: Geometry, constants: Constants, heat_transfer_coefficient_h: float) -> float:
     """
     Calculate the fin efficiency factor.
 
     :param geometry: geometry parameters
+    :type geometry: Geometry
     :param constants: material parameters
+    :type constants: Constants
     :param heat_transfer_coefficient_h: heat transfer coefficient
+    :type heat_transfer_coefficient_h: float
     :return: fin efficiency
     """
     nominator = np.tanh(np.sqrt(heat_transfer_coefficient_h * 2 * (geometry.thickness_fin_t + geometry.length_l) / \
@@ -172,11 +175,12 @@ def calc_prandtl_number_air(temperature_degree: float) -> float:
     return prandtl_number
 
 
-def calc_function_of_prandtl_for_uwt(prandtl_number):
+def calc_function_of_prandtl_for_uwt(prandtl_number: float):
     """
     Calculate the boundary condition for uniform wall temperature (UWT).
 
     :param prandtl_number: Prandtl number
+    :type prandtl_number: float
     :return: UWT boundary condition
     """
     denominator = (1 + (1.664 * prandtl_number ** (1/6)) ** (9/2)) ** (2/9)
@@ -258,7 +262,6 @@ def check_friction_factor_reynolds_number_product() -> None:
     Plot the friction factor reynolds number product with the paper.
 
     'Laminar Forced Convection Heat Transfer in the Combined Entry Region of Nun-Circular Ducts'
-    :return: None
     """
     epsilon = np.linspace(0, 1, 200)
     friction_factor_reynolds_product = calc_friction_factor_reynolds_product_fd(epsilon)
