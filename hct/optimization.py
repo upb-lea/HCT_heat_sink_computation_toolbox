@@ -2,10 +2,13 @@
 # python libraries
 import os
 import datetime
+import pickle
+import logging
 
 # 3rd party libraries
 import optuna
 import numpy as np
+import deepdiff
 
 # package libraries
 from hct.thermal_dataclasses import *
@@ -15,7 +18,7 @@ from hct.generalplotsettings import *
 
 
 class Optimization:
-    """Optuna optimization for heatsink and fan optimization."""
+    """Optuna optimization for heat sink and fan optimization."""
 
     @staticmethod
     def objective(trial: optuna.Trial, config: OptimizationParameters) -> list:
@@ -58,33 +61,29 @@ class Optimization:
             return float('nan'), float('nan')
 
     @staticmethod
-    def start_proceed_study(study_name: str, config, working_directory: str, number_trials: int,
+    def start_proceed_study(config: OptimizationParameters, number_trials: int,
                             storage: str = 'sqlite',
                             sampler=optuna.samplers.NSGAIIISampler(),
                             ) -> None:
         """Proceed a study which is stored as sqlite database.
 
-        :param study_name: Name of the study
-        :type study_name: str
         :param number_trials: Number of trials adding to the existing study
         :type number_trials: int
         :param storage: storage database, e.g. 'sqlite' or 'mysql'
         :type storage: str
         :param sampler: optuna.samplers.NSGAIISampler() or optuna.samplers.NSGAIIISampler(). Note about the brackets () !! Default: NSGAIII
         :type sampler: optuna.sampler-object
-        :param working_directory: working directory
-        :type working_directory: str
         :param config: configuration according to OptimizationParameters class
         :type config: OptimizationParameters
         """
-        if os.path.exists(f"{working_directory}/study_{study_name}.sqlite3"):
+        if os.path.exists(f"{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.sqlite3"):
             print("Existing study found. Proceeding.")
 
         # introduce study in storage, e.g. sqlite or mysql
         if storage == 'sqlite':
             # Note: for sqlite operation, there needs to be three slashes '///' even before the path '/home/...'
             # Means, in total there are four slashes including the path itself '////home/.../database.sqlite3'
-            storage = f"sqlite:///{working_directory}/study_{study_name}.sqlite3"
+            storage = f"sqlite:///{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.sqlite3"
         elif storage == 'mysql':
             storage = "mysql://monty@localhost/mydb",
 
@@ -94,17 +93,32 @@ class Optimization:
         # .ERROR: only errors
         optuna.logging.set_verbosity(optuna.logging.ERROR)
 
+        # check for differences with the old configuration file
+        config_on_disk_filepath = f"{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.pkl"
+        if os.path.exists(config_on_disk_filepath):
+            config_on_disk = Optimization.load_config(config_on_disk_filepath)
+            difference = deepdiff.DeepDiff(config, config_on_disk, ignore_order=True, significant_digits=10)
+            if difference:
+                print("Configuration file has changed from previous simulation. Do you want to proceed?")
+                print(f"Difference: {difference}")
+                read_text = input("'1' or Enter: proceed, 'any key': abort\nYour choice: ")
+                if read_text == str(1) or read_text == "":
+                    print("proceed...")
+                else:
+                    print("abort...")
+                    return None
+
         directions = ['minimize', 'minimize']
 
         func = lambda trial: Optimization.objective(trial, config)
         optuna.logging.set_verbosity(optuna.logging.ERROR)
 
-        study_in_storage = optuna.create_study(study_name=study_name,
+        study_in_storage = optuna.create_study(study_name=config.heat_sink_study_name,
                                                storage=storage,
                                                directions=directions,
                                                load_if_exists=True, sampler=sampler)
 
-        study_in_memory = optuna.create_study(directions=directions, study_name=study_name, sampler=sampler)
+        study_in_memory = optuna.create_study(directions=directions, study_name=config.heat_sink_study_name, sampler=sampler)
         print(f"Sampler is {study_in_memory.sampler.__class__.__name__}")
         study_in_memory.add_trials(study_in_storage.trials)
         study_in_memory.optimize(func, n_trials=number_trials, show_progress_bar=True)
@@ -112,19 +126,54 @@ class Optimization:
         study_in_storage.add_trials(study_in_memory.trials[-number_trials:])
         print(f"Finished {number_trials} trials.")
         print(f"current time: {datetime.datetime.now()}")
+        Optimization.save_config(config)
 
     @staticmethod
-    def study_to_df(study_name: str, database_url: str):
-        """Create a dataframe from a study.
-
-        :param study_name: name of study
-        :type study_name: str
-        :param database_url: url of database
-        :type database_url: str
+    def save_config(config: OptimizationParameters) -> None:
         """
-        loaded_study = optuna.create_study(study_name=study_name, storage=database_url, load_if_exists=True)
+        Save the configuration file as pickle file on the disk.
+
+        :param config: configuration
+        :type config: OptimizationParameters
+        """
+        # convert config path to an absolute filepath
+        config.heat_sink_optimization_directory = os.path.abspath(config.heat_sink_optimization_directory)
+        os.makedirs(config.heat_sink_optimization_directory, exist_ok=True)
+        with open(f"{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.pkl", 'wb') as output:
+            pickle.dump(config, output, pickle.HIGHEST_PROTOCOL)
+
+    @staticmethod
+    def load_config(config_pickle_filepath: str) -> OptimizationParameters:
+        """
+        Load pickle configuration file from disk.
+
+        :param config_pickle_filepath: filepath to the pickle configuration file
+        :type config_pickle_filepath: str
+        :return: Configuration file as OptimizationParameters object
+        :rtype: OptimizationParameters
+        """
+        with open(config_pickle_filepath, 'rb') as pickle_file_data:
+            return pickle.load(pickle_file_data)
+
+    @staticmethod
+    def study_to_df(config: OptimizationParameters) -> pd.DataFrame:
+        """
+        Create a Pandas dataframe from a study.
+
+        :param config: configuration
+        :type config: OptimizationParameters
+        :return: Study results as Pandas Dataframe
+        :rtype: pd.DataFrame
+        """
+        database_url = f'sqlite:///{os.path.abspath(config.heat_sink_optimization_directory)}/{config.heat_sink_study_name}.sqlite3'
+        if os.path.isfile(database_url.replace('sqlite:///', '')):
+            print("Existing study found.")
+        else:
+            raise ValueError(f"Can not find database: {database_url}")
+        loaded_study = optuna.load_study(study_name=config.heat_sink_study_name, storage=database_url)
         df = loaded_study.trials_dataframe()
-        df.to_csv(f'{study_name}.csv')
+        df.to_csv(f'{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.csv')
+        logging.info(f"Exported study as .csv file: {config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.csv")
         return df
 
     @staticmethod
@@ -176,33 +225,3 @@ class Optimization:
         plt.grid()
         plt.tight_layout()
         plt.show()
-
-
-if __name__ == '__main__':
-
-    for (_, _, file_name_list) in os.walk('data/'):
-        fan_list = file_name_list
-
-    config = OptimizationParameters(
-        height_c_list=[0.02, 0.08],
-        width_b_list=[0.02, 0.08],
-        length_l_list=[0.08, 0.20],
-        height_d_list=[0.001, 0.003],
-        number_fins_n_list=[5, 20],
-        thickness_fin_t_list=[1e-3, 5e-3],
-        fan_list=fan_list,
-        t_ambient=40,
-    )
-
-    study_name = "trial1"
-    # Optimization.start_proceed_study(study_name=study_name, config=config,
-    #                                  working_directory=os.curdir, number_trials=10000)
-
-    global_plot_settings_font_latex()
-
-    df = Optimization.study_to_df(study_name, database_url=f"sqlite:///study_{study_name}.sqlite3")
-    Optimization.df_plot_pareto_front(df, (50, 60))
-
-    # fig = optuna.visualization.plot_pareto_front(study)
-    # fig.update_layout(xaxis_title='Volume in m³', yaxis_title="R_th in K/W")
-    # fig.show()

@@ -44,6 +44,11 @@ class Constants:
 class OptimizationParameters:
     """Define optimization parameters."""
 
+    # general parameters
+    heat_sink_study_name: str
+    heat_sink_optimization_directory: str
+
+    # geometry parameters
     height_c_list: List
     width_b_list: List
     length_l_list: List
@@ -51,6 +56,8 @@ class OptimizationParameters:
     number_fins_n_list: List
     thickness_fin_t_list: List
     fan_list: List
+
+    # boundary conditions
     t_ambient: float
 
 

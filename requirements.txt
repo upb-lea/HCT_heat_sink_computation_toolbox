@@ -3,3 +3,4 @@ numpy>=1.26.4
 optuna>=3.6.1
 pandas>=2.2.2
 plotly
+deepdiff
