@@ -21,7 +21,7 @@ class Optimization:
     """Optuna optimization for heat sink and fan optimization."""
 
     @staticmethod
-    def objective(trial: optuna.Trial, config: OptimizationParameters) -> list:
+    def objective(trial: optuna.Trial, config: OptimizationParameters) -> tuple:
         """
         Objective for the optimization with optuna.
 
