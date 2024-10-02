@@ -11,7 +11,7 @@ for (_, _, file_name_list) in os.walk('../hct/data/'):
 
 config = hct.OptimizationParameters(
 
-    heat_sink_study_name="trial11",
+    heat_sink_study_name="trial1_area_1",
     heat_sink_optimization_directory=os.path.abspath("example_results"),
 
     height_c_list=[0.02, 0.08],
@@ -22,9 +22,10 @@ config = hct.OptimizationParameters(
     thickness_fin_t_list=[1e-3, 5e-3],
     fan_list=fan_list,
     t_ambient=40,
+    area_min=0.02 * 0.1
 )
 
-hct.Optimization.start_proceed_study(config=config, number_trials=100)
+hct.Optimization.start_proceed_study(config=config, number_trials=10000)
 
 hct.global_plot_settings_font_latex()
 

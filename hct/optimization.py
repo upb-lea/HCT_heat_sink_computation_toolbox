@@ -46,6 +46,9 @@ class Optimization:
         if geometry.fin_distance_s <= 0.1e-3:
             return float('nan'), float('nan')
 
+        if length_l * width_b < config.area_min:
+            return float('nan'), float('nan')
+
         try:
             volume_flow_v_dot, pressure = calc_volume_flow(fan_name, geometry, plot=False)
 
@@ -97,7 +100,7 @@ class Optimization:
         config_on_disk_filepath = f"{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.pkl"
         if os.path.exists(config_on_disk_filepath):
             config_on_disk = Optimization.load_config(config_on_disk_filepath)
-            difference = deepdiff.DeepDiff(config, config_on_disk, ignore_order=True, significant_digits=10)
+            difference = deepdiff.DeepDiff(config_on_disk, config, ignore_order=True, significant_digits=10)
             if difference:
                 print("Configuration file has changed from previous simulation. Do you want to proceed?")
                 print(f"Difference: {difference}")
@@ -186,8 +189,6 @@ class Optimization:
         :param figure_size: figures size as a x/y-tuple in mm, e.g. (160, 80)
         :type figure_size: tuple
         """
-        print(df.head())
-
         names = df["number"].to_numpy()
         # plt.figure()
         fig, ax = plt.subplots(figsize=[x / 25.4 for x in figure_size] if figure_size is not None else None, dpi=80)

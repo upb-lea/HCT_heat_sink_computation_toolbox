@@ -60,6 +60,9 @@ class OptimizationParameters:
     # boundary conditions
     t_ambient: float
 
+    # constraints
+    area_min: float
+
 
 @dataclass
 class FanData:
