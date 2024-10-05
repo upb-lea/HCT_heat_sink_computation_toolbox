@@ -234,15 +234,20 @@ def read_fan_data(filepath: str):
     return fan_cubic_meter_second, fan_pressure_drop_pascal
 
 
-def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False):
+def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False, figure_size: tuple | None = None):
     """
     Calculate the volume flow for a given fan and a given geometry.
 
     This function calculates the intersection of both graphs, the fan graph and the heatsink pressure graph and returns the intersection point.
 
     :param fan_name: file name including .csv ending
+    :type fan_name: str
     :param geometry: Geometry.
+    :type geometry: Geometry
     :param plot: True to show a visual output.
+    :type plot: bool
+    :param figure_size: Figure size in mm, e.g. (80, 60) is a 80 mm wide and 60 mm height plot
+    :type figure_size: tuple
     :return: intersection_volume_flow, intersection_pressure
     """
     fan_directory = os.path.join(os.path.dirname(__file__), "data", fan_name)
@@ -295,13 +300,15 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False):
         fan_cubic_meter_second, result_list_delta_p_total, fan_pressure_drop_pascal)
 
     if plot:
-        plt.plot(fan_cubic_meter_second, np.array(result_list_delta_p_total), label=r'Heat sink')
-        plt.plot(fan_cubic_meter_second, fan_pressure_drop_pascal, label=f"Fan: {fan_name.replace('.csv', '')}")
-        plt.plot(intersection_volume_flow, intersection_pressure, 'ro')
+        plt.figure(figsize=[x / 25.4 for x in figure_size] if figure_size is not None else None, dpi=80)
+        plt.plot(fan_cubic_meter_second, np.array(result_list_delta_p_total), label=r'Heat sink', color=colors()["blue"])
+        plt.plot(fan_cubic_meter_second, fan_pressure_drop_pascal, label="Fan", color=colors()["orange"])  # : {fan_name.replace('.csv', '')}
+        plt.plot(intersection_volume_flow, intersection_pressure, color=colors()["red"], marker='o')
         plt.xlabel('Volume flow im m³/s')
         plt.ylabel(r'Pressure drop $\Delta p$ in Pa')
         plt.grid()
         plt.legend()
+        plt.tight_layout()
         plt.show()
 
     return intersection_volume_flow, intersection_pressure
