@@ -46,10 +46,12 @@ class Optimization:
         if geometry.fin_distance_s <= 0.1e-3:
             return float('nan'), float('nan')
 
-        if length_l * width_b < config.area_min:
-            return float('nan'), float('nan')
-
         try:
+            area = width_b * length_l
+
+            if config.number_directions == 2 and area < config.area_min:
+                return float('nan'), float('nan')
+
             volume_flow_v_dot, pressure = calc_volume_flow(fan_name, geometry, plot=False)
 
             if np.isnan(volume_flow_v_dot):
@@ -59,15 +61,19 @@ class Optimization:
             # weight = calc_weight_heat_sink(geometry, constants)
             total_volume = calc_total_volume(geometry, fan_name)
 
-            return total_volume, r_th_sa
+            if config.number_directions == 2:
+                return total_volume, r_th_sa
+            elif config.number_directions == 3:
+                return total_volume, r_th_sa, area
         except:
-            return float('nan'), float('nan')
+            if config.number_directions == 2:
+                return float('nan'), float('nan')
+            elif config.number_directions == 3:
+                return float('nan'), float('nan'), float('nan')
 
     @staticmethod
-    def start_proceed_study(config: OptimizationParameters, number_trials: int,
-                            storage: str = 'sqlite',
-                            sampler=optuna.samplers.NSGAIIISampler(),
-                            ) -> None:
+    def start_proceed_study(config: OptimizationParameters, number_trials: int, storage: str = 'sqlite',
+                            sampler=optuna.samplers.NSGAIIISampler()) -> None:
         """Proceed a study which is stored as sqlite database.
 
         :param number_trials: Number of trials adding to the existing study
@@ -81,6 +87,8 @@ class Optimization:
         """
         if os.path.exists(f"{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.sqlite3"):
             print("Existing study found. Proceeding.")
+        else:
+            os.makedirs(config.heat_sink_optimization_directory, exist_ok=True)
 
         # introduce study in storage, e.g. sqlite or mysql
         if storage == 'sqlite':
@@ -111,7 +119,12 @@ class Optimization:
                     print("abort...")
                     return None
 
-        directions = ['minimize', 'minimize']
+        if config.number_directions == 2:
+            directions = ['minimize', 'minimize']
+        elif config.number_directions == 3:
+            directions = ['minimize', 'minimize', 'minimize']
+        else:
+            logging.error(f"number_directions to optimize must be 2 or 3, but it is {config.number_directions}.")
 
         func = lambda trial: Optimization.objective(trial, config)
         optuna.logging.set_verbosity(optuna.logging.ERROR)

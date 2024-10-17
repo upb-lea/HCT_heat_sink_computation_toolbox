@@ -42,7 +42,11 @@ class Constants:
 
 @dataclass
 class OptimizationParameters:
-    """Define optimization parameters."""
+    """Define optimization parameters.
+
+    2 directions: Optimize for minimum volume and minimum R_th,
+    3 directions: Optimize for minimum volume, minimum R_th and minimum surface area A_min.
+    """
 
     # general parameters
     heat_sink_study_name: str
@@ -61,6 +65,7 @@ class OptimizationParameters:
     t_ambient: float
 
     # constraints
+    number_directions: int
     area_min: float
 
 

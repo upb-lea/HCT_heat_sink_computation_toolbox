@@ -304,8 +304,8 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False, figu
         plt.plot(fan_cubic_meter_second, np.array(result_list_delta_p_total), label=r'Heat sink', color=colors()["blue"])
         plt.plot(fan_cubic_meter_second, fan_pressure_drop_pascal, label="Fan", color=colors()["orange"])  # : {fan_name.replace('.csv', '')}
         plt.plot(intersection_volume_flow, intersection_pressure, color=colors()["red"], marker='o')
-        plt.xlabel('Volume flow im m³/s')
-        plt.ylabel(r'Pressure drop $\Delta p$ in Pa')
+        plt.xlabel('Volume flow / (m³/s)')
+        plt.ylabel(r'Pressure drop $\Delta p$ / Pa')
         plt.grid()
         plt.legend()
         plt.tight_layout()
