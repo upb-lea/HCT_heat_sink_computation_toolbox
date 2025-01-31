@@ -1,7 +1,7 @@
 """Dataclass definitions."""
 # Python libraries
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 
 @dataclass
@@ -66,7 +66,7 @@ class OptimizationParameters:
 
     # constraints
     number_directions: int
-    area_min: float
+    area_min: Optional[float]
 
 
 @dataclass
