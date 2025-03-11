@@ -4,3 +4,7 @@ __pycache__/
 .idea/
 *.csv
 *.sqlite3
+dist/
+docs/build/
+gpgit/
+examples/example_results/
