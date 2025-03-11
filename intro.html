@@ -1,0 +1,762 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1 Welcome to the heat sink computation toolbox &mdash; Heat Sink Computation Toolbox (HCT) 2024 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=6fefd858"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Heat Sink Computation Toolbox (HCT) documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Heat Sink Computation Toolbox (HCT)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="sectnum">1 </span>Welcome to the heat sink computation toolbox</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation"><span class="sectnum">1.1 </span>Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-and-examples"><span class="sectnum">1.2 </span>Usage and examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#literature"><span class="sectnum">1.3 </span>Literature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bug-reports"><span class="sectnum">1.4 </span>Bug reports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing"><span class="sectnum">1.5 </span>Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changelog"><span class="sectnum">1.6 </span>Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#module-hct.generalplotsettings"><span class="sectnum">2 </span>Heat Sink Computation Toolbox (HCT) Function Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hct.generalplotsettings.colors"><code class="docutils literal notranslate"><span class="pre">colors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.generalplotsettings.global_plot_settings_font_latex"><code class="docutils literal notranslate"><span class="pre">global_plot_settings_font_latex()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.generalplotsettings.global_plot_settings_font_sansserif"><code class="docutils literal notranslate"><span class="pre">global_plot_settings_font_sansserif()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.generalplotsettings.global_plot_settings_font_size"><code class="docutils literal notranslate"><span class="pre">global_plot_settings_font_size()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.calc_biot_number"><code class="docutils literal notranslate"><span class="pre">calc_biot_number()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.calc_dimensionless_constriction_resistance_psi"><code class="docutils literal notranslate"><span class="pre">calc_dimensionless_constriction_resistance_psi()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.calc_epsilon_spreading_material"><code class="docutils literal notranslate"><span class="pre">calc_epsilon_spreading_material()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.calc_phi_c"><code class="docutils literal notranslate"><span class="pre">calc_phi_c()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.calc_r_th_m"><code class="docutils literal notranslate"><span class="pre">calc_r_th_m()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.calc_r_th_sp"><code class="docutils literal notranslate"><span class="pre">calc_r_th_sp()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.calc_sigma_c"><code class="docutils literal notranslate"><span class="pre">calc_sigma_c()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.calc_spreading_resistance_r_f"><code class="docutils literal notranslate"><span class="pre">calc_spreading_resistance_r_f()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.calc_tau"><code class="docutils literal notranslate"><span class="pre">calc_tau()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.heat_spreading.verify_with_phd_thesis_gammeter"><code class="docutils literal notranslate"><span class="pre">verify_with_phd_thesis_gammeter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_delta_p_acc"><code class="docutils literal notranslate"><span class="pre">calc_delta_p_acc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_delta_p_duct"><code class="docutils literal notranslate"><span class="pre">calc_delta_p_duct()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_delta_p_heat_sink"><code class="docutils literal notranslate"><span class="pre">calc_delta_p_heat_sink()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_epsilon_duct"><code class="docutils literal notranslate"><span class="pre">calc_epsilon_duct()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_f_app"><code class="docutils literal notranslate"><span class="pre">calc_f_app()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_f_app_duct"><code class="docutils literal notranslate"><span class="pre">calc_f_app_duct()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_k_sc"><code class="docutils literal notranslate"><span class="pre">calc_k_sc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_k_se"><code class="docutils literal notranslate"><span class="pre">calc_k_se()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_l_duct"><code class="docutils literal notranslate"><span class="pre">calc_l_duct()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_mean_d_h_duct"><code class="docutils literal notranslate"><span class="pre">calc_mean_d_h_duct()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_mean_u_duct"><code class="docutils literal notranslate"><span class="pre">calc_mean_u_duct()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_mean_u_hs"><code class="docutils literal notranslate"><span class="pre">calc_mean_u_hs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calc_volume_flow"><code class="docutils literal notranslate"><span class="pre">calc_volume_flow()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.calculate_intersection"><code class="docutils literal notranslate"><span class="pre">calculate_intersection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.compare_fan_data"><code class="docutils literal notranslate"><span class="pre">compare_fan_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.hydrodynamic.read_fan_data"><code class="docutils literal notranslate"><span class="pre">read_fan_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.optimization.Optimization"><code class="docutils literal notranslate"><span class="pre">Optimization</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hct.optimization.Optimization.df_plot_pareto_front"><code class="docutils literal notranslate"><span class="pre">Optimization.df_plot_pareto_front()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hct.optimization.Optimization.load_config"><code class="docutils literal notranslate"><span class="pre">Optimization.load_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hct.optimization.Optimization.objective"><code class="docutils literal notranslate"><span class="pre">Optimization.objective()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hct.optimization.Optimization.save_config"><code class="docutils literal notranslate"><span class="pre">Optimization.save_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hct.optimization.Optimization.start_proceed_study"><code class="docutils literal notranslate"><span class="pre">Optimization.start_proceed_study()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hct.optimization.Optimization.study_to_df"><code class="docutils literal notranslate"><span class="pre">Optimization.study_to_df()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.thermal_dataclasses.Constants"><code class="docutils literal notranslate"><span class="pre">Constants</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.thermal_dataclasses.FanData"><code class="docutils literal notranslate"><span class="pre">FanData</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry"><code class="docutils literal notranslate"><span class="pre">Geometry</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters"><code class="docutils literal notranslate"><span class="pre">OptimizationParameters</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial"><code class="docutils literal notranslate"><span class="pre">SpreadingMaterial</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Heat Sink Computation Toolbox (HCT)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="sectnum">1 </span>Welcome to the heat sink computation toolbox</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/intro.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-the-heat-sink-computation-toolbox">
+<h1><span class="sectnum">1 </span>Welcome to the heat sink computation toolbox<a class="headerlink" href="#welcome-to-the-heat-sink-computation-toolbox" title="Link to this heading"></a></h1>
+<p>Heat sink dimensioning based on analytical calculation of thermal resistance.</p>
+<img alt="https://raw.githubusercontent.com/upb-lea/HCT_heat_sink_computation_toolbox/main/docs/source/figures/geometry_operating_point.png" src="https://raw.githubusercontent.com/upb-lea/HCT_heat_sink_computation_toolbox/main/docs/source/figures/geometry_operating_point.png" />
+<p>The pressure loss through the cooling system is determined by the specified geometry and the fan. This allows the volume flow rate to be determined. The volume flow can then be used to determine the thermal resistance.</p>
+<p>The estimate of the geometry parameters and the fan is mapped to the costs (volume, R_th) using Pareto optimization.
+About 40 fan characteristic curves are stored in the toolbox.</p>
+<img alt="https://raw.githubusercontent.com/upb-lea/HCT_heat_sink_computation_toolbox/main/docs/source/figures/pareto_example.png" src="https://raw.githubusercontent.com/upb-lea/HCT_heat_sink_computation_toolbox/main/docs/source/figures/pareto_example.png" />
+<section id="installation">
+<h2><span class="sectnum">1.1 </span>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>Install in developer mode.</p>
+<blockquote>
+<div><p>git clone <a class="reference external" href="mailto:git&#37;&#52;&#48;github&#46;com">git<span>&#64;</span>github<span>&#46;</span>com</a>:upb-lea/HCT_heat_sink_computation_toolbox.git
+cd HCT_heat_sink_computation_toolbox/
+pip install -e .</p>
+</div></blockquote>
+</section>
+<section id="usage-and-examples">
+<h2><span class="sectnum">1.2 </span>Usage and examples<a class="headerlink" href="#usage-and-examples" title="Link to this heading"></a></h2>
+<p>Check out the examples in <a class="reference external" href="https://github.com/upb-lea/HCT_heat_sink_computation_toolbox/tree/main/examples">this directory</a>.</p>
+</section>
+<section id="literature">
+<h2><span class="sectnum">1.3 </span>Literature<a class="headerlink" href="#literature" title="Link to this heading"></a></h2>
+<p>This toolbox implements the thermal basics according to the following paper:</p>
+<blockquote>
+<div><p>Christoph Gammeter, Florian Krismer and Johann W. Kolar
+Weight Optimization of a Cooling System Composed of Fan and Extruded Fin Heat Sink</p>
+</div></blockquote>
+<p>Heat spreading is implemented according to the following Ph.D. thesis:</p>
+<blockquote>
+<div><p>Christoph Gammeter
+Multi-Objective Optimization of Power Electronics and Generators of Airborne Wind Turbines</p>
+</div></blockquote>
+<p>This is supplemented by various calculations and optimizations. E.g. a Pareto optimization is added.</p>
+</section>
+<section id="bug-reports">
+<h2><span class="sectnum">1.4 </span>Bug reports<a class="headerlink" href="#bug-reports" title="Link to this heading"></a></h2>
+<p>Please use the issues report button within GitHub to report bugs.</p>
+</section>
+<section id="contributing">
+<h2><span class="sectnum">1.5 </span>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
+<p>Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.</p>
+</section>
+<section id="changelog">
+<h2><span class="sectnum">1.6 </span>Changelog<a class="headerlink" href="#changelog" title="Link to this heading"></a></h2>
+<p>Find the changelog <a class="reference external" href="https://github.com/upb-lea/HCT_heat_sink_computation_toolbox/blob/main/CHANGELOG.md">here</a>.</p>
+</section>
+</section>
+<section id="module-hct.generalplotsettings">
+<span id="heat-sink-computation-toolbox-hct-function-documentation"></span><h1><span class="sectnum">2 </span>Heat Sink Computation Toolbox (HCT) Function Documentation<a class="headerlink" href="#module-hct.generalplotsettings" title="Link to this heading"></a></h1>
+<p>Plot settings: Normal font or LaTeX font.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.generalplotsettings.colors">
+<span class="sig-prename descclassname"><span class="pre">hct.generalplotsettings.</span></span><span class="sig-name descname"><span class="pre">colors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#hct.generalplotsettings.colors" title="Link to this definition"></a></dt>
+<dd><p>Colors according to the GNOME color scheme (Color 4).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.generalplotsettings.global_plot_settings_font_latex">
+<span class="sig-prename descclassname"><span class="pre">hct.generalplotsettings.</span></span><span class="sig-name descname"><span class="pre">global_plot_settings_font_latex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#hct.generalplotsettings.global_plot_settings_font_latex" title="Link to this definition"></a></dt>
+<dd><p>Set the plot fonts to LaTeX-font.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.generalplotsettings.global_plot_settings_font_sansserif">
+<span class="sig-prename descclassname"><span class="pre">hct.generalplotsettings.</span></span><span class="sig-name descname"><span class="pre">global_plot_settings_font_sansserif</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#hct.generalplotsettings.global_plot_settings_font_sansserif" title="Link to this definition"></a></dt>
+<dd><p>Set the plot fonts to Sans-Serif-Font.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.generalplotsettings.global_plot_settings_font_size">
+<span class="sig-prename descclassname"><span class="pre">hct.generalplotsettings.</span></span><span class="sig-name descname"><span class="pre">global_plot_settings_font_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">font_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#hct.generalplotsettings.global_plot_settings_font_size" title="Link to this definition"></a></dt>
+<dd><p>Change the plot font size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>font_size</strong> (<em>float</em>) – font size</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-hct.heat_spreading">Heat spreading calculation according to doctor thesis.</p>
+<p>CHRISTOPH GAMMETER
+Multi-Objective Optimization of Power Electronics and Generators of Airborne Wind Turbines</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.calc_biot_number">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_biot_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heat_spreading_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><span class="pre">SpreadingMaterial</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_th_zero</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.heat_spreading.calc_biot_number" title="Link to this definition"></a></dt>
+<dd><p>Calculate the biot number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heat_spreading_material</strong> – heat spreading material</p></li>
+<li><p><strong>r_th_zero</strong> – thermal resistance for the rest of the system (cooling fins)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.calc_dimensionless_constriction_resistance_psi">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_dimensionless_constriction_resistance_psi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon_spreading_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.heat_spreading.calc_dimensionless_constriction_resistance_psi" title="Link to this definition"></a></dt>
+<dd><p>Calculate the dimensionless constriction resistance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epsilon_spreading_material</strong> – dimensionless geometry factor of the heat sink</p></li>
+<li><p><strong>phi_c</strong> – phi_c according to paper</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.calc_epsilon_spreading_material">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_epsilon_spreading_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heat_spreading_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><span class="pre">SpreadingMaterial</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.heat_spreading.calc_epsilon_spreading_material" title="Link to this definition"></a></dt>
+<dd><p>Calculate the dimensional factor for the heat spreading material.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>heat_spreading_material</strong> – SpreadingMaterial</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.calc_phi_c">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_phi_c</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biot_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.heat_spreading.calc_phi_c" title="Link to this definition"></a></dt>
+<dd><p>Calculate phi_c.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau</strong> – tau</p></li>
+<li><p><strong>sigma_c</strong> – sigma_c</p></li>
+<li><p><strong>biot_number</strong> – biot number</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.calc_r_th_m">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_r_th_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heat_spreading_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><span class="pre">SpreadingMaterial</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.heat_spreading.calc_r_th_m" title="Link to this definition"></a></dt>
+<dd><p>Calculate the R_th,d (heatsink baseplate).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>heat_spreading_material</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><em>SpreadingMaterial</em></a>) – heat preading material according to SpreadingMaterial class</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>r_th_d in K/W</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.calc_r_th_sp">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_r_th_sp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spreading_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><span class="pre">SpreadingMaterial</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_th_zero</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.heat_spreading.calc_r_th_sp" title="Link to this definition"></a></dt>
+<dd><p>Calculate the r_th_sp for the spreading material.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spreading_material</strong> – SpreadingMaterial</p></li>
+<li><p><strong>r_th_zero</strong> – r_th_zero, according to the paper, the rest of the heat sink.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.calc_sigma_c">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_sigma_c</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon_spreading_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.heat_spreading.calc_sigma_c" title="Link to this definition"></a></dt>
+<dd><p>Calculate the sigma_c factor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>epsilon_spreading_material</strong> – Epsilon for the spreading material</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.calc_spreading_resistance_r_f">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_spreading_resistance_r_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heat_spreading_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><span class="pre">SpreadingMaterial</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">psi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.heat_spreading.calc_spreading_resistance_r_f" title="Link to this definition"></a></dt>
+<dd><p>Calculate the spreading resistance r_f.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi</strong> – dimensionless constriction resistance</p></li>
+<li><p><strong>heat_spreading_material</strong> – SpreadingMaterial</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.calc_tau">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_tau</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heat_spreading_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><span class="pre">SpreadingMaterial</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.heat_spreading.calc_tau" title="Link to this definition"></a></dt>
+<dd><p>Calculate the tau factor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>heat_spreading_material</strong> – SpreadingMaterial</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.heat_spreading.verify_with_phd_thesis_gammeter">
+<span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">verify_with_phd_thesis_gammeter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#hct.heat_spreading.verify_with_phd_thesis_gammeter" title="Link to this definition"></a></dt>
+<dd><p>Verify with figure 3.18 (page 149), Ph.D. thesis Gammeter.</p>
+</dd></dl>
+
+<p id="module-hct.hydrodynamic">Implementation of the hydrodynamic model according to a given paper.</p>
+<p>Christoph Gammeter, Florian Krismer, Johann Kolar: ‘Weight Optimization of a Cooling System Composed of Fan and Extruded Fin Heat Sink’</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_delta_p_acc">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_delta_p_acc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_flow_v_dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Constants" title="hct.thermal_dataclasses.Constants"><span class="pre">Constants</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_delta_p_acc" title="Link to this definition"></a></dt>
+<dd><p>Calculate the pressure drop for the frictionless fluid flow acceleration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geometry</strong> – geometry of the heat sink</p></li>
+<li><p><strong>volume_flow_v_dot</strong> – volume flow in m³/s</p></li>
+<li><p><strong>constants</strong> – constants</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pressure drop in Pascal (Pa)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_delta_p_duct">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_delta_p_duct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_app_duct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_duct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_d_h_duct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Constants" title="hct.thermal_dataclasses.Constants"><span class="pre">Constants</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_u_duct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_delta_p_duct" title="Link to this definition"></a></dt>
+<dd><p>Calculate the duct static pressure drop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f_app_duct</strong> (<em>flaot</em>) – apparent friction factor for viscous fluid flow in the air duct</p></li>
+<li><p><strong>l_duct</strong> (<em>float</em>) – lenght of the air duct</p></li>
+<li><p><strong>mean_u_duct</strong> (<em>float</em>) – average velocity inside the heat sink</p></li>
+<li><p><strong>mean_d_h_duct</strong> (<em>float</em>) – average velocity inside the air duct</p></li>
+<li><p><strong>constants</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.Constants" title="hct.thermal_dataclasses.Constants"><em>Constants</em></a>) – constants according to the Constants class</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pressure difference of the air duct in Pascal (Pa)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_delta_p_heat_sink">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_delta_p_heat_sink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_app</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_se</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_sc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Constants" title="hct.thermal_dataclasses.Constants"><span class="pre">Constants</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_u_hs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.hydrodynamic.calc_delta_p_heat_sink" title="Link to this definition"></a></dt>
+<dd><p>Calculate the pressure drop of the heat sink.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f_app</strong> (<em>float</em>) – apparent friction factor for viscous fluid flow in ducts</p></li>
+<li><p><strong>k_se</strong> (<em>float</em>) – friction factor for sudden contraction</p></li>
+<li><p><strong>k_sc</strong> (<em>float</em>) – friction factor for sudden expansion</p></li>
+<li><p><strong>constants</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.Constants" title="hct.thermal_dataclasses.Constants"><em>Constants</em></a>) – Constants.</p></li>
+<li><p><strong>geometry</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><em>Geometry</em></a>) – Geometry.</p></li>
+<li><p><strong>d_h</strong> (<em>float</em>)</p></li>
+<li><p><strong>mean_u_hs</strong> (<em>float</em>) – average velocity inside the heat sink</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>delta_p_heat_sink in Pacal (Pa).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_epsilon_duct">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_epsilon_duct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_epsilon_duct" title="Link to this definition"></a></dt>
+<dd><p>Calculate the epsilon shape factor from the air duct geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>geometry</strong> – Geometry parameters</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Epsilon shape factor for the air duct.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_f_app">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_f_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">constants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Constants" title="hct.thermal_dataclasses.Constants"><span class="pre">Constants</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_flow_v_dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_re_sqrt_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_f_app" title="Link to this definition"></a></dt>
+<dd><p>Calculate the apparent friction factor for the average duct hydraulic parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geometry</strong> – Geometry.</p></li>
+<li><p><strong>constants</strong> – Constants.</p></li>
+<li><p><strong>volume_flow_v_dot</strong> – volume flow in m³/s</p></li>
+<li><p><strong>f_re_sqrt_a</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Apparent friction factor for the average duct hydraulic parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_f_app_duct">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_f_app_duct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Constants" title="hct.thermal_dataclasses.Constants"><span class="pre">Constants</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_flow_v_dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_re_sqrt_a_fd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_f_app_duct" title="Link to this definition"></a></dt>
+<dd><p>Calculate the apparent friction factor for the average duct hydraulic diameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>constants</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.Constants" title="hct.thermal_dataclasses.Constants"><em>Constants</em></a>) – Constants</p></li>
+<li><p><strong>geometry</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><em>Geometry</em></a>) – Geometry</p></li>
+<li><p><strong>volume_flow_v_dot</strong> (<em>float</em>) – Volume flow in m³/s</p></li>
+<li><p><strong>f_re_sqrt_a_fd</strong> (<em>float</em>) – f_re_sqrt_a_fd</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Apparent friction factor for the average duct hydraulic diameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_k_sc">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_k_sc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_k_sc" title="Link to this definition"></a></dt>
+<dd><p>Calculate the friction factor sudden expansion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>geometry</strong> – Geometry.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Friction factor sudden expansion.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_k_se">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_k_se</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_k_se" title="Link to this definition"></a></dt>
+<dd><p>Calculate the friction factor for sudden contraction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>geometry</strong> – Geometry</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>friction factor for sudden contraction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_l_duct">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_l_duct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_l_duct" title="Link to this definition"></a></dt>
+<dd><p>Calculate the length of the air duct.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>geometry</strong> – Geometry</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Length of the air duct.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_mean_d_h_duct">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_mean_d_h_duct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_mean_d_h_duct" title="Link to this definition"></a></dt>
+<dd><p>Calculate the mean average velocity inside the air duct.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>geometry</strong> – Geometry</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>mean average velocity inside the air duct.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_mean_u_duct">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_mean_u_duct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_flow_v_dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_mean_u_duct" title="Link to this definition"></a></dt>
+<dd><p>Calculate the average velocity inside the air duct.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geometry</strong> – Geometry of the heat sink</p></li>
+<li><p><strong>volume_flow_v_dot</strong> – volume flow in m³/s</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>average velocity inside the air duct in m/s.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_mean_u_hs">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_mean_u_hs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_flow_v_dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_mean_u_hs" title="Link to this definition"></a></dt>
+<dd><p>Calculate the average velocity inside the heat sink.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geometry</strong> – Geometry of the heat sink</p></li>
+<li><p><strong>volume_flow_v_dot</strong> – volume flow in m³/s</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>average velocity inside the heat sink in m/s.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calc_volume_flow">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_volume_flow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fan_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_volume_flow" title="Link to this definition"></a></dt>
+<dd><p>Calculate the volume flow for a given fan and a given geometry.</p>
+<p>This function calculates the intersection of both graphs, the fan graph and the heatsink pressure graph and returns the intersection point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fan_name</strong> (<em>str</em>) – file name including .csv ending</p></li>
+<li><p><strong>geometry</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><em>Geometry</em></a>) – Geometry.</p></li>
+<li><p><strong>plot</strong> (<em>bool</em>) – True to show a visual output.</p></li>
+<li><p><strong>figure_size</strong> (<em>tuple</em>) – Figure size in mm, e.g. (80, 60) is a 80 mm wide and 60 mm height plot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>intersection_volume_flow, intersection_pressure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.calculate_intersection">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calculate_intersection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calculate_intersection" title="Link to this definition"></a></dt>
+<dd><p>Calculate the intersection between two graphs (x_list, y1_list) and (x_list, y2_list).</p>
+<p>The return are both lists (x_list, y1_list) and (x_list, y2_list) added by the intersection points
+as well as the intersection point itself.
+:param x_list: common x-coordinates of the two graphs
+:type x_list: list
+:param y1_list: y-coordinates of graph 1
+:type y1_list: list
+:param y2_list: y-coordinates of graph 2
+:type y2_list: list
+:return: x_list, y1_list, y2_list (lists are complemented by the intersection point), x_intersection, y_intersection</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.compare_fan_data">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">compare_fan_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#hct.hydrodynamic.compare_fan_data" title="Link to this definition"></a></dt>
+<dd><p>Plot all available fan data for comparison.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hct.hydrodynamic.read_fan_data">
+<span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">read_fan_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.read_fan_data" title="Link to this definition"></a></dt>
+<dd><p>Read stored .csv fan data, translate curves with SI-unit outputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> – Filepath to fan .csv-file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>fan_cubic_meter_second, fan_pressure_drop_pascal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-hct.optimization">Heat sink system optimization using optuna.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="hct.optimization.Optimization">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hct.optimization.</span></span><span class="sig-name descname"><span class="pre">Optimization</span></span><a class="headerlink" href="#hct.optimization.Optimization" title="Link to this definition"></a></dt>
+<dd><p>Optuna optimization for heat sink and fan optimization.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hct.optimization.Optimization.df_plot_pareto_front">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">df_plot_pareto_front</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.optimization.Optimization.df_plot_pareto_front" title="Link to this definition"></a></dt>
+<dd><p>Plot an interactive Pareto diagram (losses vs. volume) to select the transformers to re-simulate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.Dataframe</em>) – Dataframe, generated from an optuna study (exported by optuna)</p></li>
+<li><p><strong>figure_size</strong> (<em>tuple</em>) – figures size as a x/y-tuple in mm, e.g. (160, 80)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hct.optimization.Optimization.load_config">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_pickle_filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><span class="pre">OptimizationParameters</span></a></span></span><a class="headerlink" href="#hct.optimization.Optimization.load_config" title="Link to this definition"></a></dt>
+<dd><p>Load pickle configuration file from disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_pickle_filepath</strong> (<em>str</em>) – filepath to the pickle configuration file</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configuration file as OptimizationParameters object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters">OptimizationParameters</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hct.optimization.Optimization.objective">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><span class="pre">OptimizationParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#hct.optimization.Optimization.objective" title="Link to this definition"></a></dt>
+<dd><p>Objective for the optimization with optuna.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trial</strong> (<em>optuna.Trial</em>) – optuna input suggestions</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><em>OptimizationParameters</em></a>) – optimization configuration according to OptimizationParameters class</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>total_volume, r_th_sa in case of success, nan,nan in case of unrealistic geometry parameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hct.optimization.Optimization.save_config">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><span class="pre">OptimizationParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#hct.optimization.Optimization.save_config" title="Link to this definition"></a></dt>
+<dd><p>Save the configuration file as pickle file on the disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><em>OptimizationParameters</em></a>) – configuration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hct.optimization.Optimization.start_proceed_study">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_proceed_study</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config:</span> <span class="pre">~hct.thermal_dataclasses.OptimizationParameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_trials:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler=&lt;optuna.samplers._nsgaiii._sampler.NSGAIIISampler</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#hct.optimization.Optimization.start_proceed_study" title="Link to this definition"></a></dt>
+<dd><p>Proceed a study which is stored as sqlite database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number_trials</strong> (<em>int</em>) – Number of trials adding to the existing study</p></li>
+<li><p><strong>storage</strong> (<em>str</em>) – storage database, e.g. ‘sqlite’ or ‘mysql’</p></li>
+<li><p><strong>sampler</strong> (<em>optuna.sampler-object</em>) – optuna.samplers.NSGAIISampler() or optuna.samplers.NSGAIIISampler(). Note about the brackets () !! Default: NSGAIII</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><em>OptimizationParameters</em></a>) – configuration according to OptimizationParameters class</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hct.optimization.Optimization.study_to_df">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">study_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><span class="pre">OptimizationParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#hct.optimization.Optimization.study_to_df" title="Link to this definition"></a></dt>
+<dd><p>Create a Pandas dataframe from a study.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><em>OptimizationParameters</em></a>) – configuration</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Study results as Pandas Dataframe</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-hct.thermal_dataclasses">Dataclass definitions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="hct.thermal_dataclasses.Constants">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hct.thermal_dataclasses.</span></span><span class="sig-name descname"><span class="pre">Constants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_4</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_air</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_air</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_air</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluid_viscosity_air</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_venturi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.thermal_dataclasses.Constants" title="Link to this definition"></a></dt>
+<dd><p>Define constants.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hct.thermal_dataclasses.FanData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hct.thermal_dataclasses.</span></span><span class="sig-name descname"><span class="pre">FanData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manufacturer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasheet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.thermal_dataclasses.FanData" title="Link to this definition"></a></dt>
+<dd><p>Define fan data.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hct.thermal_dataclasses.Geometry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hct.thermal_dataclasses.</span></span><span class="sig-name descname"><span class="pre">Geometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height_c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height_d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_fins_n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness_fin_t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fin_distance_s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_duct_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.thermal_dataclasses.Geometry" title="Link to this definition"></a></dt>
+<dd><p>Define a single heat sink geometry.</p>
+<p>l_duct_min: minimum length of the air duct.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hct.thermal_dataclasses.OptimizationParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hct.thermal_dataclasses.</span></span><span class="sig-name descname"><span class="pre">OptimizationParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heat_sink_study_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heat_sink_optimization_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height_c_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width_b_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_l_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height_d_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_fins_n_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness_fin_t_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fan_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_ambient</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_directions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.thermal_dataclasses.OptimizationParameters" title="Link to this definition"></a></dt>
+<dd><p>Define optimization parameters.</p>
+<p>2 directions: Optimize for minimum volume and minimum R_th,
+3 directions: Optimize for minimum volume, minimum R_th and minimum surface area A_min.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hct.thermal_dataclasses.SpreadingMaterial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hct.thermal_dataclasses.</span></span><span class="sig-name descname"><span class="pre">SpreadingMaterial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lambda_conductivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness_d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heat_source_area_a_s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spreading_material_area_a_sp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.thermal_dataclasses.SpreadingMaterial" title="Link to this definition"></a></dt>
+<dd><p>Define the heat spreading material.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Heat Sink Computation Toolbox (HCT) documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, UPB-LEA.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
