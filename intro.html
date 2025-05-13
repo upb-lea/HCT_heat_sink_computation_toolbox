@@ -206,7 +206,7 @@ Multi-Objective Optimization of Power Electronics and Generators of Airborne Win
 </dd></dl>
 
 <p id="module-hct.heat_spreading">Heat spreading calculation according to doctor thesis.</p>
-<p>CHRISTOPH GAMMETER
+<p>Christoph Gammeter
 Multi-Objective Optimization of Power Electronics and Generators of Airborne Wind Turbines</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hct.heat_spreading.calc_biot_number">
@@ -265,10 +265,10 @@ Multi-Objective Optimization of Power Electronics and Generators of Airborne Win
 <dl class="py function">
 <dt class="sig sig-object py" id="hct.heat_spreading.calc_r_th_m">
 <span class="sig-prename descclassname"><span class="pre">hct.heat_spreading.</span></span><span class="sig-name descname"><span class="pre">calc_r_th_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heat_spreading_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><span class="pre">SpreadingMaterial</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hct.heat_spreading.calc_r_th_m" title="Link to this definition"></a></dt>
-<dd><p>Calculate the R_th,d (heatsink baseplate).</p>
+<dd><p>Calculate the R_th,d (heat sink, baseplate).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>heat_spreading_material</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><em>SpreadingMaterial</em></a>) – heat preading material according to SpreadingMaterial class</p>
+<dd class="field-odd"><p><strong>heat_spreading_material</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.SpreadingMaterial" title="hct.thermal_dataclasses.SpreadingMaterial"><em>SpreadingMaterial</em></a>) – heat spreading material according to SpreadingMaterial class</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>r_th_d in K/W</p>
@@ -359,8 +359,8 @@ Multi-Objective Optimization of Power Electronics and Generators of Airborne Win
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f_app_duct</strong> (<em>flaot</em>) – apparent friction factor for viscous fluid flow in the air duct</p></li>
-<li><p><strong>l_duct</strong> (<em>float</em>) – lenght of the air duct</p></li>
+<li><p><strong>f_app_duct</strong> (<em>float</em>) – apparent friction factor for viscous fluid flow in the air duct</p></li>
+<li><p><strong>l_duct</strong> (<em>float</em>) – length of the air duct</p></li>
 <li><p><strong>mean_u_duct</strong> (<em>float</em>) – average velocity inside the heat sink</p></li>
 <li><p><strong>mean_d_h_duct</strong> (<em>float</em>) – average velocity inside the air duct</p></li>
 <li><p><strong>constants</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.Constants" title="hct.thermal_dataclasses.Constants"><em>Constants</em></a>) – constants according to the Constants class</p></li>
@@ -389,7 +389,7 @@ Multi-Objective Optimization of Power Electronics and Generators of Airborne Win
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>delta_p_heat_sink in Pacal (Pa).</p>
+<dd class="field-even"><p>delta_p_heat_sink in Pascal (Pa).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
@@ -543,7 +543,7 @@ Multi-Objective Optimization of Power Electronics and Generators of Airborne Win
 <dt class="sig sig-object py" id="hct.hydrodynamic.calc_volume_flow">
 <span class="sig-prename descclassname"><span class="pre">hct.hydrodynamic.</span></span><span class="sig-name descname"><span class="pre">calc_volume_flow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fan_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.Geometry" title="hct.thermal_dataclasses.Geometry"><span class="pre">Geometry</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.hydrodynamic.calc_volume_flow" title="Link to this definition"></a></dt>
 <dd><p>Calculate the volume flow for a given fan and a given geometry.</p>
-<p>This function calculates the intersection of both graphs, the fan graph and the heatsink pressure graph and returns the intersection point.</p>
+<p>This function calculates the intersection of both graphs, the fan graph and the heat sink pressure graph and returns the intersection point.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -606,7 +606,7 @@ as well as the intersection point itself.
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> (<em>pd.Dataframe</em>) – Dataframe, generated from an optuna study (exported by optuna)</p></li>
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – DataFrame, generated from an optuna study (exported by optuna)</p></li>
 <li><p><strong>figure_size</strong> (<em>tuple</em>) – figures size as a x/y-tuple in mm, e.g. (160, 80)</p></li>
 </ul>
 </dd>
@@ -677,13 +677,13 @@ as well as the intersection point itself.
 <dl class="py method">
 <dt class="sig sig-object py" id="hct.optimization.Optimization.study_to_df">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">study_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><span class="pre">OptimizationParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#hct.optimization.Optimization.study_to_df" title="Link to this definition"></a></dt>
-<dd><p>Create a Pandas dataframe from a study.</p>
+<dd><p>Create a Pandas DataFrame from a study.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>config</strong> (<a class="reference internal" href="#hct.thermal_dataclasses.OptimizationParameters" title="hct.thermal_dataclasses.OptimizationParameters"><em>OptimizationParameters</em></a>) – configuration</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Study results as Pandas Dataframe</p>
+<dd class="field-even"><p>Study results as Pandas DataFrame</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
@@ -693,7 +693,7 @@ as well as the intersection point itself.
 
 </dd></dl>
 
-<p id="module-hct.thermal_dataclasses">Dataclass definitions.</p>
+<p id="module-hct.thermal_dataclasses">Data class definitions.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hct.thermal_dataclasses.Constants">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hct.thermal_dataclasses.</span></span><span class="sig-name descname"><span class="pre">Constants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_4</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_air</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_air</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_air</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluid_viscosity_air</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_venturi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hct.thermal_dataclasses.Constants" title="Link to this definition"></a></dt>
