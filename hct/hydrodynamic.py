@@ -35,7 +35,7 @@ def calc_delta_p_heat_sink(f_app: float, k_se: float, k_sc: float, constants: Co
     :type d_h: float
     :param mean_u_hs: average velocity inside the heat sink
     :type mean_u_hs: float
-    :return: delta_p_heat_sink in Pacal (Pa).
+    :return: delta_p_heat_sink in Pascal (Pa).
     :rtype: float
     """
     part_i = f_app * geometry.length_l / d_h + k_se + k_sc
@@ -83,8 +83,8 @@ def calc_delta_p_duct(f_app_duct: float, l_duct: float, mean_d_h_duct: float, co
     Calculate the duct static pressure drop.
 
     :param f_app_duct: apparent friction factor for viscous fluid flow in the air duct
-    :type f_app_duct: flaot
-    :param l_duct: lenght of the air duct
+    :type f_app_duct: float
+    :param l_duct: length of the air duct
     :type l_duct: float
     :param mean_u_duct: average velocity inside the heat sink
     :type mean_u_duct: float
@@ -238,7 +238,7 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False, figu
     """
     Calculate the volume flow for a given fan and a given geometry.
 
-    This function calculates the intersection of both graphs, the fan graph and the heatsink pressure graph and returns the intersection point.
+    This function calculates the intersection of both graphs, the fan graph and the heat sink pressure graph and returns the intersection point.
 
     :param fan_name: file name including .csv ending
     :type fan_name: str

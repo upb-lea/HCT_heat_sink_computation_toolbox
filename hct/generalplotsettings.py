@@ -38,7 +38,7 @@ def colors() -> dict:
         "orange": tuple(ti / nominator for ti in (230, 97, 0)),
         "purple": tuple(ti / nominator for ti in (129, 61, 156)),
         "brown": tuple(ti / nominator for ti in (134, 94, 60)),
-        "grey": tuple(ti / nominator for ti in (119, 118, 123)),
+        "gray": tuple(ti / nominator for ti in (119, 118, 123)),
         "yellow": tuple(ti / nominator for ti in (245, 194, 17)),
         "black": tuple(ti / nominator for ti in (0, 0, 0)),
         "white": tuple(ti / nominator for ti in (255, 255, 255))

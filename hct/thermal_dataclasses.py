@@ -1,4 +1,4 @@
-"""Dataclass definitions."""
+"""Data class definitions."""
 # Python libraries
 from dataclasses import dataclass
 from typing import List, Optional

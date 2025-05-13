@@ -1,7 +1,7 @@
 """
 Heat spreading calculation according to doctor thesis.
 
-CHRISTOPH GAMMETER
+Christoph Gammeter
 Multi-Objective Optimization of Power Electronics and Generators of Airborne Wind Turbines
 """
 # Python libraries
@@ -17,9 +17,9 @@ from hct.cooling_system import *
 
 def calc_r_th_m(heat_spreading_material: SpreadingMaterial) -> float:
     """
-    Calculate the R_th,d (heatsink baseplate).
+    Calculate the R_th,d (heat sink, baseplate).
 
-    :param heat_spreading_material: heat preading material according to SpreadingMaterial class
+    :param heat_spreading_material: heat spreading material according to SpreadingMaterial class
     :type heat_spreading_material: SpreadingMaterial
     :return: r_th_d in K/W
     """

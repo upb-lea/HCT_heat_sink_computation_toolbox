@@ -15,7 +15,7 @@ from hct.fan_data import *
 
 def calc_r_th_d(geometry: Geometry, constants: Constants) -> float:
     """
-    Calculate the R_th,d (heatsink baseplate).
+    Calculate the R_th,d (heat sink baseplate).
 
     :param geometry: geometry parameters
     :param constants: material parameters
@@ -103,12 +103,12 @@ def calc_heat_transfer_coefficient_h(nu_sqrt_a: float, constants: Constants, d_h
 
 def init_constants() -> Constants:
     """
-    Lambda material (aluminium): 236 for 99% aluminium. 75...235 for aluminium alloy.
+    Lambda material (aluminum): 236 for 99% aluminum. 75...235 for aluminum alloy.
 
     :return: Constants
     """
-    # aluminium (ETH): 210
-    # aluminium (100%): 236
+    # aluminum (ETH): 210
+    # aluminum (100%): 236
     # copper (100%): 401
 
     return Constants(c_1=3.24, c_2=1.5, c_3=0.409, c_4=2.0, gamma=-0.3,
@@ -153,7 +153,7 @@ def calc_hs_shape_z_star(geometry: Geometry, constants: Constants, prandtl_numbe
     :return: dimensionless heat sink shape factor
     """
     if calc_epsilon(geometry) > 1:
-        raise Exception("Formular is not valid for this type of shape.")
+        raise Exception("Formula is not valid for this type of shape.")
 
     hs_shape_z_star = geometry.length_l * geometry.number_fins_n * constants.fluid_viscosity_air / (prandtl_number * volume_flow_v_dot)
     return hs_shape_z_star
@@ -273,7 +273,7 @@ def check_friction_factor_reynolds_number_product() -> None:
 
 def calc_final_r_th_s_a(geometry: Geometry, constants: Constants, t_ambient: float, volume_flow_v_dot: float):
     """
-    Calculate the final r_th from sink to ambient for a given geometry nand volume flow.
+    Calculate the final r_th from sink to ambient for a given geometry and volume flow.
 
     :param geometry: Geometry
     :param constants: Constants
@@ -345,7 +345,7 @@ def calc_duct_volume(geometry: Geometry, fan_name: str):
     """
     Calculate the volume of the duct.
 
-    The distance l_duct between heatsink and fan is calculated using the alpha_rad angle.
+    The distance l_duct between heat sink and fan is calculated using the alpha_rad angle.
     In case of a too small duct, the minimum duct length is taken.
     :param geometry: Geometry
     :param fan_name: with or without '.csv', e.g. 'orion_od4010h' or 'orion_od4010h.csv'

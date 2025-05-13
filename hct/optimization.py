@@ -174,11 +174,11 @@ class Optimization:
     @staticmethod
     def study_to_df(config: OptimizationParameters) -> pd.DataFrame:
         """
-        Create a Pandas dataframe from a study.
+        Create a Pandas DataFrame from a study.
 
         :param config: configuration
         :type config: OptimizationParameters
-        :return: Study results as Pandas Dataframe
+        :return: Study results as Pandas DataFrame
         :rtype: pd.DataFrame
         """
         database_url = f'sqlite:///{os.path.abspath(config.heat_sink_optimization_directory)}/{config.heat_sink_study_name}.sqlite3'
@@ -197,8 +197,8 @@ class Optimization:
         """
         Plot an interactive Pareto diagram (losses vs. volume) to select the transformers to re-simulate.
 
-        :param df: Dataframe, generated from an optuna study (exported by optuna)
-        :type df: pd.Dataframe
+        :param df: DataFrame, generated from an optuna study (exported by optuna)
+        :type df: pd.DataFrame
         :param figure_size: figures size as a x/y-tuple in mm, e.g. (160, 80)
         :type figure_size: tuple
         """
