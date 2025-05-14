@@ -4,6 +4,9 @@ Implementation of the thermal model according to a given paper.
 Christoph Gammeter, Florian Krismer, Johann Kolar:
 'Weight Optimization of a Cooling System Composed of Fan and Extruded Fin Heat Sink'
 """
+# python libraries
+import logging
+
 # 3rd party libraries
 import numpy as np
 from matplotlib import pyplot as plt
@@ -12,6 +15,8 @@ import pandas as pd
 # hct libraries
 from hct.thermal_dataclasses import *
 from hct.fan_data import *
+
+logger = logging.getLogger(__name__)
 
 def calc_r_th_d(geometry: Geometry, constants: Constants) -> float:
     """
@@ -48,6 +53,7 @@ def calc_effective_fin_surface(eta_fin: float, geometry: Geometry) -> float:
     :return: effective fin area
     """
     a_eff_fin = geometry.number_fins_n * (2 * geometry.height_c * eta_fin + geometry.fin_distance_s) * geometry.length_l
+    logger.info(f"{a_eff_fin=}")
     return a_eff_fin
 
 def calc_fin_efficiency(geometry: Geometry, constants: Constants, heat_transfer_coefficient_h: float) -> float:
@@ -222,7 +228,7 @@ def calc_friction_factor_reynolds_product(geometry: Geometry, volume_flow_v_dot:
                                         friction_factor_reynolds_product_fd ** 2) ** 0.5
     return friction_factor_reynolds_product
 
-def calc_friction_factor_reynolds_product_fd(epsilon: float):
+def calc_friction_factor_reynolds_product_fd(epsilon: float | np.ndarray):
     """
     Calculate the calc_friction_factor_reynolds_product_fd to further calculate the friction factor reynolds product.
 

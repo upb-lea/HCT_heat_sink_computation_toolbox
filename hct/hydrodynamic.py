@@ -300,7 +300,7 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False, figu
         fan_cubic_meter_second, result_list_delta_p_total, fan_pressure_drop_pascal)
 
     if plot:
-        plt.figure(figsize=[x / 25.4 for x in figure_size] if figure_size is not None else None, dpi=80)
+        plt.figure(figsize=tuple([x / 25.4 for x in figure_size]) if figure_size is not None else None, dpi=80)
         plt.plot(fan_cubic_meter_second, np.array(result_list_delta_p_total), label=r'Heat sink', color=colors()["blue"])
         plt.plot(fan_cubic_meter_second, fan_pressure_drop_pascal, label="Fan", color=colors()["orange"])  # : {fan_name.replace('.csv', '')}
         plt.plot(intersection_volume_flow, intersection_pressure, color=colors()["red"], marker='o')
@@ -313,18 +313,18 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False, figu
 
     return intersection_volume_flow, intersection_pressure
 
-def calculate_intersection(x_list: list, y1_list: list, y2_list: list):
+def calculate_intersection(x_list: np.ndarray, y1_list: np.ndarray, y2_list: np.ndarray) -> np.ndarray:
     """
     Calculate the intersection between two graphs (x_list, y1_list) and (x_list, y2_list).
 
     The return are both lists (x_list, y1_list) and (x_list, y2_list) added by the intersection points
     as well as the intersection point itself.
     :param x_list: common x-coordinates of the two graphs
-    :type x_list: list
+    :type x_list: np.ndarray
     :param y1_list: y-coordinates of graph 1
-    :type y1_list: list
+    :type y1_list: np.ndarray
     :param y2_list: y-coordinates of graph 2
-    :type y2_list: list
+    :type y2_list: np.ndarray
     :return: x_list, y1_list, y2_list (lists are complemented by the intersection point), x_intersection, y_intersection
     """
     [intersection_index] = np.argwhere(np.diff(np.sign(y1_list - y2_list))).flatten()

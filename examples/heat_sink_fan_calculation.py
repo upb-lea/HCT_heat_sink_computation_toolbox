@@ -17,7 +17,7 @@ fan_name = 'orion_od4010m.csv'
 
 hct.global_plot_settings_font_latex()
 hct.global_plot_settings_font_size(12)
-figure_size = (80, 60)
+figure_size: tuple = (80, 60)
 
 volume_flow, pressure = hct.calc_volume_flow(fan_name, geometry, plot=True, figure_size=figure_size)
 r_th_sa = hct.calc_final_r_th_s_a(geometry, constants, t_ambient, volume_flow)
@@ -30,7 +30,7 @@ for volume_flow_sweep in volume_flow_sweep_list:
     r_th_sa_sweep = hct.calc_final_r_th_s_a(geometry, constants, t_ambient, volume_flow_sweep)
     r_th_sa_sweep_list = np.append(r_th_sa_sweep_list, r_th_sa_sweep)
 
-plt.figure(figsize=[x / 25.4 for x in figure_size] if figure_size is not None else None, dpi=80)
+plt.figure(figsize=tuple([x / 25.4 for x in figure_size]) if figure_size is not None else None, dpi=80)
 plt.plot(volume_flow_sweep_list, r_th_sa_sweep_list, color=hct.colors()["blue"])
 plt.xlabel("Volume flow / (m³/s)")
 plt.ylabel(r"$R_\mathrm{th}$ / (K/W)")

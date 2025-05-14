@@ -16,6 +16,7 @@ from hct.cooling_system import *
 from hct.hydrodynamic import *
 from hct.generalplotsettings import *
 
+logger = logging.getLogger(__name__)
 
 class Optimization:
     """Optuna optimization for heat sink and fan optimization."""
@@ -49,8 +50,11 @@ class Optimization:
         try:
             area = width_b * length_l
 
-            if config.number_directions == 2 and area < config.area_min:
-                return float('nan'), float('nan')
+            if config.area_min:
+                if config.number_directions == 2 and area < config.area_min:
+                    return float('nan'), float('nan')
+            elif config.number_directions == 2:
+                    return float('nan'), float('nan')
 
             volume_flow_v_dot, pressure = calc_volume_flow(fan_name, geometry, plot=False)
 
@@ -73,7 +77,7 @@ class Optimization:
 
     @staticmethod
     def start_proceed_study(config: OptimizationParameters, number_trials: int, storage: str = 'sqlite',
-                            sampler=optuna.samplers.NSGAIIISampler()) -> None:
+                            sampler: optuna.samplers.BaseSampler = optuna.samplers.NSGAIIISampler()) -> None:
         """Proceed a study which is stored as sqlite database.
 
         :param number_trials: Number of trials adding to the existing study
@@ -86,7 +90,7 @@ class Optimization:
         :type config: OptimizationParameters
         """
         if os.path.exists(f"{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.sqlite3"):
-            print("Existing study found. Proceeding.")
+            logger.info("Existing study found. Proceeding.")
         else:
             os.makedirs(config.heat_sink_optimization_directory, exist_ok=True)
 
@@ -96,7 +100,7 @@ class Optimization:
             # Means, in total there are four slashes including the path itself '////home/.../database.sqlite3'
             storage = f"sqlite:///{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.sqlite3"
         elif storage == 'mysql':
-            storage = "mysql://monty@localhost/mydb",
+            storage = "mysql://monty@localhost/mydb"
 
         # set logging verbosity: https://optuna.readthedocs.io/en/stable/reference/generated/optuna.logging.set_verbosity.html#optuna.logging.set_verbosity
         # .INFO: all messages (default)
@@ -110,13 +114,13 @@ class Optimization:
             config_on_disk = Optimization.load_config(config_on_disk_filepath)
             difference = deepdiff.DeepDiff(config_on_disk, config, ignore_order=True, significant_digits=10)
             if difference:
-                print("Configuration file has changed from previous simulation. Do you want to proceed?")
-                print(f"Difference: {difference}")
+                logger.warning("Configuration file has changed from previous simulation. Do you want to proceed?")
+                logger.warning(f"Difference: {difference}")
                 read_text = input("'1' or Enter: proceed, 'any key': abort\nYour choice: ")
                 if read_text == str(1) or read_text == "":
-                    print("proceed...")
+                    logger.info("proceed...")
                 else:
-                    print("abort...")
+                    logger.info("abort...")
                     return None
 
         if config.number_directions == 2:
@@ -124,7 +128,7 @@ class Optimization:
         elif config.number_directions == 3:
             directions = ['minimize', 'minimize', 'minimize']
         else:
-            logging.error(f"number_directions to optimize must be 2 or 3, but it is {config.number_directions}.")
+            logger.error(f"number_directions to optimize must be 2 or 3, but it is {config.number_directions}.")
 
         func = lambda trial: Optimization.objective(trial, config)
         optuna.logging.set_verbosity(optuna.logging.ERROR)
@@ -135,13 +139,13 @@ class Optimization:
                                                load_if_exists=True, sampler=sampler)
 
         study_in_memory = optuna.create_study(directions=directions, study_name=config.heat_sink_study_name, sampler=sampler)
-        print(f"Sampler is {study_in_memory.sampler.__class__.__name__}")
+        logger.info(f"Sampler is {study_in_memory.sampler.__class__.__name__}")
         study_in_memory.add_trials(study_in_storage.trials)
         study_in_memory.optimize(func, n_trials=number_trials, show_progress_bar=True)
 
         study_in_storage.add_trials(study_in_memory.trials[-number_trials:])
-        print(f"Finished {number_trials} trials.")
-        print(f"current time: {datetime.datetime.now()}")
+        logger.info(f"Finished {number_trials} trials.")
+        logger.info(f"current time: {datetime.datetime.now()}")
         Optimization.save_config(config)
 
     @staticmethod
@@ -169,7 +173,10 @@ class Optimization:
         :rtype: OptimizationParameters
         """
         with open(config_pickle_filepath, 'rb') as pickle_file_data:
-            return pickle.load(pickle_file_data)
+            loaded_data = pickle.load(pickle_file_data)
+            if not isinstance(loaded_data, OptimizationParameters):
+                raise ValueError("Loaded data is not of type OptimizationParameters.")
+            return loaded_data
 
     @staticmethod
     def study_to_df(config: OptimizationParameters) -> pd.DataFrame:
@@ -183,17 +190,17 @@ class Optimization:
         """
         database_url = f'sqlite:///{os.path.abspath(config.heat_sink_optimization_directory)}/{config.heat_sink_study_name}.sqlite3'
         if os.path.isfile(database_url.replace('sqlite:///', '')):
-            print("Existing study found.")
+            logger.info("Existing study found.")
         else:
             raise ValueError(f"Can not find database: {database_url}")
         loaded_study = optuna.load_study(study_name=config.heat_sink_study_name, storage=database_url)
         df = loaded_study.trials_dataframe()
         df.to_csv(f'{config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.csv')
-        logging.info(f"Exported study as .csv file: {config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.csv")
+        logger.info(f"Exported study as .csv file: {config.heat_sink_optimization_directory}/{config.heat_sink_study_name}.csv")
         return df
 
     @staticmethod
-    def df_plot_pareto_front(df: pd.DataFrame, figure_size: tuple):
+    def df_plot_pareto_front(df: pd.DataFrame, figure_size: tuple) -> None:
         """
         Plot an interactive Pareto diagram (losses vs. volume) to select the transformers to re-simulate.
 

@@ -6,8 +6,8 @@ import os
 # own libraries
 import hct
 
-for (_, _, file_name_list) in os.walk('../hct/data/'):
-    fan_list = file_name_list
+for (_, _, file_name_list) in os.walk('../hct/data/'):  # type: ignore
+    fan_list: list = file_name_list
 
 config = hct.OptimizationParameters(
 
