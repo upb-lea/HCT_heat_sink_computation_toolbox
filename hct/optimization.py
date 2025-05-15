@@ -54,7 +54,7 @@ class Optimization:
                 if config.number_directions == 2 and area < config.area_min:
                     return float('nan'), float('nan')
             elif config.number_directions == 2:
-                    return float('nan'), float('nan')
+                return float('nan'), float('nan')
 
             volume_flow_v_dot, pressure = calc_volume_flow(fan_name, geometry, plot=False)
 
