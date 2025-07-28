@@ -1,7 +1,6 @@
 """Data class definitions."""
 # Python libraries
 from dataclasses import dataclass
-from typing import List, Optional
 
 
 @dataclass
@@ -53,20 +52,20 @@ class OptimizationParameters:
     heat_sink_optimization_directory: str
 
     # geometry parameters
-    height_c_min_max_list: List
-    width_b_min_max_list: List
-    length_l_min_max_list: List
-    height_d_min_max_list: List
-    number_fins_n_min_max_list: List
-    thickness_fin_t_min_max_list: List
-    fan_list: List
+    height_c_min_max_list: list
+    width_b_min_max_list: list
+    length_l_min_max_list: list
+    height_d_min_max_list: list
+    number_fins_n_min_max_list: list
+    thickness_fin_t_min_max_list: list
+    fan_list: list
 
     # boundary conditions
     t_ambient: float
 
     # constraints
     number_directions: int
-    area_min: Optional[float]
+    area_min: float | None
 
 
 @dataclass
