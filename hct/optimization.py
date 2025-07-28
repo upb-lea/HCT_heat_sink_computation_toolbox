@@ -33,12 +33,12 @@ class Optimization:
         :return: total_volume, r_th_sa in case of success, nan,nan in case of unrealistic geometry parameters
         """
         fan_name = trial.suggest_categorical("fan", config.fan_list)
-        height_c = trial.suggest_float("height_c", config.height_c_list[0], config.height_c_list[1])
-        height_d = trial.suggest_float("height_d", config.height_d_list[0], config.height_d_list[1])
-        length_l = trial.suggest_float("length_l", config.length_l_list[0], config.length_l_list[1])
-        width_b = trial.suggest_float("width_b", config.width_b_list[0], config.width_b_list[1])
-        thickness_fin_t = trial.suggest_float("thickness_fin_t", config.thickness_fin_t_list[0], config.thickness_fin_t_list[1])
-        number_fins_n = trial.suggest_int("number_fins_n", config.number_fins_n_list[0], config.number_fins_n_list[1])
+        height_c = trial.suggest_float("height_c", config.height_c_min_max_list[0], config.height_c_min_max_list[1])
+        height_d = trial.suggest_float("height_d", config.height_d_min_max_list[0], config.height_d_min_max_list[1])
+        length_l = trial.suggest_float("length_l", config.length_l_min_max_list[0], config.length_l_min_max_list[1])
+        width_b = trial.suggest_float("width_b", config.width_b_min_max_list[0], config.width_b_min_max_list[1])
+        thickness_fin_t = trial.suggest_float("thickness_fin_t", config.thickness_fin_t_min_max_list[0], config.thickness_fin_t_min_max_list[1])
+        number_fins_n = trial.suggest_int("number_fins_n", config.number_fins_n_min_max_list[0], config.number_fins_n_min_max_list[1])
 
         constants = init_constants()
         geometry = Geometry(height_c=height_c, height_d=height_d, length_l=length_l, width_b=width_b, number_fins_n=number_fins_n,

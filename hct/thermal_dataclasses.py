@@ -53,12 +53,12 @@ class OptimizationParameters:
     heat_sink_optimization_directory: str
 
     # geometry parameters
-    height_c_list: List
-    width_b_list: List
-    length_l_list: List
-    height_d_list: List
-    number_fins_n_list: List
-    thickness_fin_t_list: List
+    height_c_min_max_list: List
+    width_b_min_max_list: List
+    length_l_min_max_list: List
+    height_d_min_max_list: List
+    number_fins_n_min_max_list: List
+    thickness_fin_t_min_max_list: List
     fan_list: List
 
     # boundary conditions
