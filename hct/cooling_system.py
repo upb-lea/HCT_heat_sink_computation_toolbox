@@ -53,7 +53,7 @@ def calc_effective_fin_surface(eta_fin: float, geometry: Geometry) -> float:
     :return: effective fin area
     """
     a_eff_fin = geometry.number_fins_n * (2 * geometry.height_c * eta_fin + geometry.fin_distance_s) * geometry.length_l
-    logger.info(f"{a_eff_fin=}")
+    logger.debug(f"{a_eff_fin=}")
     return a_eff_fin
 
 def calc_fin_efficiency(geometry: Geometry, constants: Constants, heat_transfer_coefficient_h: float) -> float:
