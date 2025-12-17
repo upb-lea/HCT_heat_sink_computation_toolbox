@@ -234,12 +234,14 @@ def read_fan_data(filepath: str):
     return fan_cubic_meter_second, fan_pressure_drop_pascal
 
 
-def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False, figure_size: tuple | None = None):
+def calc_volume_flow(ambient_temperature: float, fan_name: str, geometry: Geometry, plot: bool = False, figure_size: tuple | None = None):
     """
     Calculate the volume flow for a given fan and a given geometry.
 
     This function calculates the intersection of both graphs, the fan graph and the heat sink pressure graph and returns the intersection point.
 
+    :param ambient_temperature: ambient temperature in °C
+    :type ambient_temperature: float
     :param fan_name: file name including .csv ending
     :type fan_name: str
     :param geometry: Geometry.
@@ -255,7 +257,7 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False, figu
     fan_cubic_meter_second, fan_pressure_drop_pascal = read_fan_data(fan_directory)
 
     # calculate static pressure of system
-    constants = init_constants()
+    constants = init_constants(ambient_temperature)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
 
     result_list_delta_p_duct = []
@@ -263,25 +265,35 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False, figu
     result_list_delta_p_acc = []
     result_list_delta_p_total = []
 
+    # volume flow independent values
+
+    d_h_hs = calc_d_h(geometry)
+    k_se = calc_k_se(geometry)
+    k_sc = calc_k_sc(geometry)
+
+    # heat sink parameters
+    epsilon_hs = calc_epsilon(geometry)
+    friction_factor_reynolds_product_fd_hs = calc_friction_factor_reynolds_product_fd(epsilon_hs)
+
+    # duct parameters
+    mean_d_h_duct = calc_mean_d_h_duct(geometry)
+    l_duct = calc_l_duct(geometry)
+    epsilon_duct = calc_epsilon_duct(geometry)
+    friction_factor_reynolds_product_fd_duct = calc_friction_factor_reynolds_product_fd(epsilon_duct)
+
     for volume_flow_v_dot in fan_cubic_meter_second:
         # delta_p_heat_sink
-        epsilon = calc_epsilon(geometry)
-        d_h = calc_d_h(geometry)
-        k_se = calc_k_se(geometry)
-        k_sc = calc_k_sc(geometry)
-        friction_factor_reynolds_product_fd = calc_friction_factor_reynolds_product_fd(epsilon)
-        friction_factor_reynolds_product = calc_friction_factor_reynolds_product(geometry, volume_flow_v_dot, constants, friction_factor_reynolds_product_fd)
+        friction_factor_reynolds_product_hs = calc_friction_factor_reynolds_product(geometry, volume_flow_v_dot, constants,
+                                                                                        friction_factor_reynolds_product_fd_hs)
         mean_u_hs = calc_mean_u_hs(geometry, volume_flow_v_dot)
-        f_app = calc_f_app(geometry, constants, volume_flow_v_dot, friction_factor_reynolds_product)
-        delta_p_heat_sink = calc_delta_p_heat_sink(f_app, k_se, k_sc, constants, geometry, d_h, mean_u_hs)
+        f_app_hs = calc_f_app(geometry, constants, volume_flow_v_dot, friction_factor_reynolds_product_hs)
+        delta_p_heat_sink = calc_delta_p_heat_sink(f_app_hs, k_se, k_sc, constants, geometry, d_h_hs, mean_u_hs)
 
         # delta_p_duct
-        mean_d_h_duct = calc_mean_d_h_duct(geometry)
-        l_duct = calc_l_duct(geometry)
-        # epsilon_duct = calc_epsilon_duct(geometry)
+        friction_factor_reynolds_product_duct = calc_friction_factor_reynolds_product(geometry, volume_flow_v_dot, constants,
+                                                                                          friction_factor_reynolds_product_fd_duct)
         mean_u_duct = calc_mean_u_duct(geometry, volume_flow_v_dot)
-
-        f_app_duct = calc_f_app_duct(constants, geometry, volume_flow_v_dot, friction_factor_reynolds_product)
+        f_app_duct = calc_f_app_duct(constants, geometry, volume_flow_v_dot, friction_factor_reynolds_product_duct)
         if np.isnan(f_app_duct):
             return np.nan, np.nan
         delta_p_duct = calc_delta_p_duct(f_app_duct, l_duct, mean_d_h_duct, constants, mean_u_duct)
@@ -289,8 +301,9 @@ def calc_volume_flow(fan_name: str, geometry: Geometry, plot: bool = False, figu
         # delta_p_acc
         delta_p_acc = calc_delta_p_acc(geometry, volume_flow_v_dot, constants)
 
+        # delta_p_total
         delta_p_total = delta_p_acc + delta_p_duct + delta_p_heat_sink
-
+    
         result_list_delta_p_acc.append(delta_p_acc)
         result_list_delta_p_duct.append(delta_p_duct)
         result_list_delta_p_heat_sink.append(delta_p_heat_sink)

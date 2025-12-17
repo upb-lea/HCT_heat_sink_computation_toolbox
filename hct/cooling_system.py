@@ -107,16 +107,20 @@ def calc_heat_transfer_coefficient_h(nu_sqrt_a: float, constants: Constants, d_h
     heat_transfer_coefficient_h = nu_sqrt_a * constants.lambda_air / d_h
     return heat_transfer_coefficient_h
 
-def init_constants() -> Constants:
+def init_constants(temperature: float) -> Constants:
     """
     Lambda material (aluminum): 236 for 99% aluminum. 75...235 for aluminum alloy.
 
+    :param temperature: temperature in °C
+    :type temperature: float
     :return: Constants
+    :rtype: Constants
     """
     # aluminum (ETH): 210
     # aluminum (100%): 236
     # copper (100%): 401
 
+    ## Data sources:
     # thermal capacitance air (https://stoffdaten-online.de/luft/) c_air = 1006
     # thermal conductivity air (https://stoffdaten-online.de/luft/) lambda_air (0 °C) = 0.02436
     # thermal conductivity air (https://stoffdaten-online.de/luft/) lambda_air (20 °C) = 0.0258
@@ -125,11 +129,28 @@ def init_constants() -> Constants:
     # viscosity air (https://stoffdaten-online.de/luft/) fluid_viscosity_air (20 °C) = 15.32e-6
     # viscosity air (https://stoffdaten-online.de/luft/) fluid_viscosity_air (40 °C) = 17.23e-6
 
-    # constants from dissertation gammeter 2017
+    # constants from dissertation gammeter 2017. Other values are missing in the thesis.
     # rho air = 1.226 kg/m³ (page 195)
+    # for this code, all air data is used from https://stoffdaten-online.de/luft/
+
+    constants_df = pd.DataFrame({"temperature": [-40, -20, 0, 20, 40, 80, 100],  # °C
+                                 "rho_air": [1.496, 1.377, 1.276,1.189, 1.112, 0.9862, 0.9333],  # kg/m³
+                                 "c_air": [1006, 1006, 1006, 1006, 1007, 1010, 1012],  # J/(Kg*K)
+                                 "lambda_air": [21.22e-3, 22.81e-3, 24.36e-3, 25.87e-3, 27.35e-3, 30.225e-3, 31.62e-3],  # W/(K*m)
+                                 "fluid_viscosity_air": [10.13e-6, 11.77e-6, 13.50e-6, 15.32e-6, 17.23e-6, 21.30e-6, 23.46e-6]})  # m²/s
+
+    if temperature > constants_df["temperature"].iloc[-1]:
+        raise ValueError(f"given temperature is {temperature} °C, must be below {constants_df['temperature'].iloc[-1]} °C.")
+    if temperature < constants_df["temperature"].iloc[0]:
+        raise ValueError(f"given temperature is {temperature} °C, must be above {constants_df['temperature'].iloc[0]} °C.")
+
+    rho_air = np.interp(temperature, constants_df["temperature"], constants_df["rho_air"])
+    c_air = np.interp(temperature, constants_df["temperature"], constants_df["c_air"])
+    lambda_air = np.interp(temperature, constants_df["temperature"], constants_df["lambda_air"])
+    fluid_viscosity_air = np.interp(temperature, constants_df["temperature"], constants_df["fluid_viscosity_air"])
 
     return Constants(c_1=3.24, c_2=1.5, c_3=0.409, c_4=2.0, gamma=-0.3,
-                     rho_air=1.226, c_air=1006, lambda_air=0.0258, fluid_viscosity_air=15.32e-6,
+                     rho_air=rho_air, c_air=c_air, lambda_air=lambda_air, fluid_viscosity_air=fluid_viscosity_air,
                      lambda_material=210, rho_material=2699, k_venturi=0.2)
 
 
