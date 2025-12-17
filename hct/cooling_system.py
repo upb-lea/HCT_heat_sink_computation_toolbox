@@ -120,7 +120,7 @@ def init_constants(temperature: float) -> Constants:
     # aluminum (100%): 236
     # copper (100%): 401
 
-    ## Data sources:
+    # Data sources:
     # thermal capacitance air (https://stoffdaten-online.de/luft/) c_air = 1006
     # thermal conductivity air (https://stoffdaten-online.de/luft/) lambda_air (0 °C) = 0.02436
     # thermal conductivity air (https://stoffdaten-online.de/luft/) lambda_air (20 °C) = 0.0258
@@ -134,7 +134,7 @@ def init_constants(temperature: float) -> Constants:
     # for this code, all air data is used from https://stoffdaten-online.de/luft/
 
     constants_df = pd.DataFrame({"temperature": [-40, -20, 0, 20, 40, 80, 100],  # °C
-                                 "rho_air": [1.496, 1.377, 1.276,1.189, 1.112, 0.9862, 0.9333],  # kg/m³
+                                 "rho_air": [1.496, 1.377, 1.276, 1.189, 1.112, 0.9862, 0.9333],  # kg/m³
                                  "c_air": [1006, 1006, 1006, 1006, 1007, 1010, 1012],  # J/(Kg*K)
                                  "lambda_air": [21.22e-3, 22.81e-3, 24.36e-3, 25.87e-3, 27.35e-3, 30.225e-3, 31.62e-3],  # W/(K*m)
                                  "fluid_viscosity_air": [10.13e-6, 11.77e-6, 13.50e-6, 15.32e-6, 17.23e-6, 21.30e-6, 23.46e-6]})  # m²/s
@@ -256,7 +256,8 @@ def calc_friction_factor_reynolds_product(geometry: Geometry, volume_flow_v_dot:
     :param friction_factor_reynolds_product_fd:
     :return:
     """
-    friction_factor_reynolds_product = (11.8336 * volume_flow_v_dot / (geometry.length_l * geometry.number_cooling_channels_n * constants.fluid_viscosity_air) + \
+    friction_factor_reynolds_product = (11.8336 * volume_flow_v_dot / (geometry.length_l * geometry.number_cooling_channels_n * \
+                                                                       constants.fluid_viscosity_air) + \
                                         friction_factor_reynolds_product_fd ** 2) ** 0.5
     return friction_factor_reynolds_product
 
@@ -282,7 +283,8 @@ def calc_hydrodynamic_entry_length_lh(hydrodynamic_entry_length_laminar_lhplus: 
     :param constants: Constants
     :return: hydrodynamic entry length in m
     """
-    hydrodynamic_entry_length_lh = hydrodynamic_entry_length_laminar_lhplus * volume_flow_v_dot / geometry.number_cooling_channels_n / constants.fluid_viscosity_air
+    hydrodynamic_entry_length_lh = (hydrodynamic_entry_length_laminar_lhplus * volume_flow_v_dot / geometry.number_cooling_channels_n / \
+                                    constants.fluid_viscosity_air)
     return hydrodynamic_entry_length_lh
 
 def calc_hydrodynamic_entry_length_laminar_lhplus(epsilon: float):

@@ -48,13 +48,15 @@ friction_factor_reynolds_product_fd_duct = hct.calc_friction_factor_reynolds_pro
 
 for volume_flow_v_dot in volume_flow_v_dot_list:
     # delta_p_heat_sink
-    friction_factor_reynolds_product_hs = hct.calc_friction_factor_reynolds_product(geometry, volume_flow_v_dot, constants, friction_factor_reynolds_product_fd_hs)
+    friction_factor_reynolds_product_hs = hct.calc_friction_factor_reynolds_product(geometry, volume_flow_v_dot, constants,
+                                                                                    friction_factor_reynolds_product_fd_hs)
     mean_u_hs = hct.calc_mean_u_hs(geometry, volume_flow_v_dot)
     f_app_hs = hct.calc_f_app(geometry, constants, volume_flow_v_dot, friction_factor_reynolds_product_hs)
     delta_p_heat_sink = hct.calc_delta_p_heat_sink(f_app_hs, k_se, k_sc, constants, geometry, d_h_hs, mean_u_hs)
 
     # delta_p_duct
-    friction_factor_reynolds_product_duct = hct.calc_friction_factor_reynolds_product(geometry, volume_flow_v_dot, constants, friction_factor_reynolds_product_fd_duct)
+    friction_factor_reynolds_product_duct = hct.calc_friction_factor_reynolds_product(geometry, volume_flow_v_dot, constants,
+                                                                                      friction_factor_reynolds_product_fd_duct)
     mean_u_duct = hct.calc_mean_u_duct(geometry, volume_flow_v_dot)
     f_app_duct = hct.calc_f_app_duct(constants, geometry, volume_flow_v_dot, friction_factor_reynolds_product_duct)
     delta_p_duct = hct.calc_delta_p_duct(f_app_duct, l_duct, mean_d_h_duct, constants, mean_u_duct)
@@ -83,18 +85,18 @@ paper_heat_sink_line = paper_heat_sink_line.to_numpy()
 
 fig = plt.figure(figsize=(80/25.4, 60/25.4))
 plt.plot(volume_flow_v_dot_list, result_list_delta_p_total, color=hct.colors()["blue"], label="Own implementation")
-#plt.plot(volume_flow_v_dot_list, result_list_delta_p_heat_sink, color=hct.colors()["gray"], label="heat_sink")
-#plt.plot(volume_flow_v_dot_list, acc_plot_line, color=hct.colors()["gray"], label="acc")
-#plt.plot(volume_flow_v_dot_list, duct_plot_line, color=hct.colors()["gray"], label="duct", linestyle='-.')
+# plt.plot(volume_flow_v_dot_list, result_list_delta_p_heat_sink, color=hct.colors()["gray"], label="heat_sink")
+# plt.plot(volume_flow_v_dot_list, acc_plot_line, color=hct.colors()["gray"], label="acc")
+# plt.plot(volume_flow_v_dot_list, duct_plot_line, color=hct.colors()["gray"], label="duct", linestyle='-.')
 plt.plot(paper_comparison[:, 0], paper_comparison[:, 1], color=hct.colors()["red"], label="Paper")
-#plt.plot(paper_acc_line[:, 0], paper_acc_line[:, 1], color=hct.colors()["red"], label="Paper")
-#plt.plot(paper_heat_sink_line[:, 0], paper_heat_sink_line[:, 1], color=hct.colors()["red"], label="Paper")
+# plt.plot(paper_acc_line[:, 0], paper_acc_line[:, 1], color=hct.colors()["red"], label="Paper")
+# plt.plot(paper_heat_sink_line[:, 0], paper_heat_sink_line[:, 1], color=hct.colors()["red"], label="Paper")
 plt.legend()
 plt.xlabel(r'Volume flow $\dot{V} \mathrm{/ (m^3/s)}$')
 plt.ylabel('Pressure drop \n '
            r'$\Delta p \mathrm{/ (Pa)}$')
 plt.grid()
-plt.ylim([0,100])
+plt.ylim([0, 100])
 plt.xlim([0.001, 0.014])
 plt.tight_layout()
 plt.show()

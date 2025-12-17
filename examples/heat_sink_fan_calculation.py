@@ -6,11 +6,8 @@ from matplotlib import pyplot as plt
 # import own libraries
 import hct
 
-
-
 t_ambient = 40
 constants = hct.init_constants(t_ambient)
-
 
 geometry = hct.Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_cooling_channels_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
