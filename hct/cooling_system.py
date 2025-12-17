@@ -52,7 +52,7 @@ def calc_effective_fin_surface(eta_fin: float, geometry: Geometry) -> float:
     :param geometry: geometry parameters
     :return: effective fin area
     """
-    a_eff_fin = geometry.number_fins_n * (2 * geometry.height_c * eta_fin + geometry.fin_distance_s) * geometry.length_l
+    a_eff_fin = geometry.number_cooling_channels_n * (2 * geometry.height_c * eta_fin + geometry.fin_distance_s) * geometry.length_l
     logger.debug(f"{a_eff_fin=}")
     return a_eff_fin
 
@@ -82,15 +82,15 @@ def calc_fin_distance_s(geometry: Geometry) -> float:
     :param geometry: Geometry
     :return: fin distance
     """
-    fin_distance_s = (geometry.width_b - (geometry.number_fins_n + 1) * geometry.thickness_fin_t) / geometry.number_fins_n
+    fin_distance_s = (geometry.width_b - (geometry.number_cooling_channels_n + 1) * geometry.thickness_fin_t) / geometry.number_cooling_channels_n
     return fin_distance_s
 
 def calc_d_h(geometry: Geometry) -> float:
     """
-    Calculate the average duct hydraulic diameter.
+    Calculate the average heat sink aerodynamic diameter.
 
     :param geometry: Geometry
-    :return: Average duct hydraulic diameter
+    :return: Average heat sink aerodynamic diameter
     """
     d_h = 2 * geometry.fin_distance_s * geometry.height_c / (geometry.fin_distance_s + geometry.height_c)
     return d_h
@@ -117,8 +117,19 @@ def init_constants() -> Constants:
     # aluminum (100%): 236
     # copper (100%): 401
 
+    # thermal capacitance air (https://stoffdaten-online.de/luft/) c_air = 1006
+    # thermal conductivity air (https://stoffdaten-online.de/luft/) lambda_air (0 °C) = 0.02436
+    # thermal conductivity air (https://stoffdaten-online.de/luft/) lambda_air (20 °C) = 0.0258
+    # thermal conductivity air (https://stoffdaten-online.de/luft/) lambda_air (40 °C) = 0.0273
+    # viscosity air (https://stoffdaten-online.de/luft/) fluid_viscosity_air (0 °C) = 13.5e-6
+    # viscosity air (https://stoffdaten-online.de/luft/) fluid_viscosity_air (20 °C) = 15.32e-6
+    # viscosity air (https://stoffdaten-online.de/luft/) fluid_viscosity_air (40 °C) = 17.23e-6
+
+    # constants from dissertation gammeter 2017
+    # rho air = 1.226 kg/m³ (page 195)
+
     return Constants(c_1=3.24, c_2=1.5, c_3=0.409, c_4=2.0, gamma=-0.3,
-                     rho_air=1.293, c_air=1005, lambda_air=0.0261, fluid_viscosity_air=18.2e-6,
+                     rho_air=1.226, c_air=1006, lambda_air=0.0258, fluid_viscosity_air=15.32e-6,
                      lambda_material=210, rho_material=2699, k_venturi=0.2)
 
 
@@ -161,7 +172,7 @@ def calc_hs_shape_z_star(geometry: Geometry, constants: Constants, prandtl_numbe
     if calc_epsilon(geometry) > 1:
         raise Exception("Formula is not valid for this type of shape.")
 
-    hs_shape_z_star = geometry.length_l * geometry.number_fins_n * constants.fluid_viscosity_air / (prandtl_number * volume_flow_v_dot)
+    hs_shape_z_star = geometry.length_l * geometry.number_cooling_channels_n * constants.fluid_viscosity_air / (prandtl_number * volume_flow_v_dot)
     return hs_shape_z_star
 
 def calc_prandtl_number_air(temperature_degree: float) -> float:
@@ -224,7 +235,7 @@ def calc_friction_factor_reynolds_product(geometry: Geometry, volume_flow_v_dot:
     :param friction_factor_reynolds_product_fd:
     :return:
     """
-    friction_factor_reynolds_product = (11.8336 * volume_flow_v_dot / (geometry.length_l * geometry.number_fins_n * constants.fluid_viscosity_air) + \
+    friction_factor_reynolds_product = (11.8336 * volume_flow_v_dot / (geometry.length_l * geometry.number_cooling_channels_n * constants.fluid_viscosity_air) + \
                                         friction_factor_reynolds_product_fd ** 2) ** 0.5
     return friction_factor_reynolds_product
 
@@ -250,7 +261,7 @@ def calc_hydrodynamic_entry_length_lh(hydrodynamic_entry_length_laminar_lhplus: 
     :param constants: Constants
     :return: hydrodynamic entry length in m
     """
-    hydrodynamic_entry_length_lh = hydrodynamic_entry_length_laminar_lhplus * volume_flow_v_dot / geometry.number_fins_n / constants.fluid_viscosity_air
+    hydrodynamic_entry_length_lh = hydrodynamic_entry_length_laminar_lhplus * volume_flow_v_dot / geometry.number_cooling_channels_n / constants.fluid_viscosity_air
     return hydrodynamic_entry_length_lh
 
 def calc_hydrodynamic_entry_length_laminar_lhplus(epsilon: float):
@@ -402,7 +413,7 @@ def calc_weight_heat_sink(geometry: Geometry, constants: Constants) -> float:
     :return: Heat sink weight.
     """
     boxed_volume = calc_boxed_volume_heat_sink(geometry)
-    air_volume = (geometry.number_fins_n - 1) * geometry.fin_distance_s * geometry.height_c * geometry.length_l
+    air_volume = (geometry.number_cooling_channels_n - 1) * geometry.fin_distance_s * geometry.height_c * geometry.length_l
     material_volume = boxed_volume - air_volume
     materiaL_weight = material_volume * constants.rho_material
     return materiaL_weight
@@ -410,7 +421,7 @@ def calc_weight_heat_sink(geometry: Geometry, constants: Constants) -> float:
 
 if __name__ == "__main__":
     constants = init_constants()
-    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_cooling_channels_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
     print(geometry)

@@ -14,7 +14,7 @@ class Geometry:
     width_b: float
     length_l: float
     height_d: float
-    number_fins_n: int
+    number_cooling_channels_n: int
     thickness_fin_t: float
     fin_distance_s: float
     alpha_rad: float

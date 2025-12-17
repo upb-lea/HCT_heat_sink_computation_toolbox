@@ -4,7 +4,7 @@ from hct import *
 def test_full_cooling_system_workflow():
     """Integration test for the full cooling system workflow."""
     constants = init_constants()
-    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_cooling_channels_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
     volume_flow_v_dot = 0.014
@@ -15,7 +15,7 @@ def test_full_cooling_system_workflow():
 
 def test_full_hydrodynamic_workflow():
     """Integration test for the full hydrodynamic workflow."""
-    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_cooling_channels_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
 
@@ -44,7 +44,7 @@ def test_heat_spreading_workflow():
     spreading_material = SpreadingMaterial(heat_source_area_a_s=mosfet_area, spreading_material_area_a_sp=2 * mosfet_area, lambda_conductivity=400,
                                            thickness_d=thickness)
 
-    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=thickness, height_c=30e-3, number_fins_n=5,
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=thickness, height_c=30e-3, number_cooling_channels_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
 
@@ -54,7 +54,7 @@ def test_heat_spreading_workflow():
 
 def test_calc_boxed_volume_heat_sink():
     """Unit test to calculate the boxed heat sink volume."""
-    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_cooling_channels_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     volume = calc_boxed_volume_heat_sink(geometry)
 
@@ -74,7 +74,7 @@ def test_duct_volume_1():
     """Test the calculation of the duct volume."""
     fan_name = "orion_od4010l"
 
-    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_fins_n=5,
+    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_cooling_channels_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
 
     duct_volume = calc_duct_volume(geometry, fan_name)
@@ -85,7 +85,7 @@ def test_duct_volume_1():
 
 # def test_duct_volume_2():
 #    fan_name  "orion_od4010l"
-#    geometry = Geometry(length_l=100e-3, width_b=50e-3, height_d=3e-3, height_c=50e-3, number_fins_n=5,
+#    geometry = Geometry(length_l=100e-3, width_b=50e-3, height_d=3e-3, height_c=50e-3, number_cooling_channels_n=5,
 #                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40))
 #
 #    duct_volume = calc_duct_volume(geometry, fan_name, l_duct_min=10e-3)
