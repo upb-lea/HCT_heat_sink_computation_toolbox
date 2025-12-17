@@ -31,8 +31,11 @@ paper_comparison = pd.read_csv('paper_r_th_model.csv', delimiter=';', decimal=',
 paper_comparison = paper_comparison.to_numpy()
 hct.global_plot_settings_font_latex()
 fig = plt.figure(figsize=(80/25.4, 60/25.4))
-plt.plot(paper_comparison[:, 0], paper_comparison[:, 1], label='Paper', color=hct.colors()["red"])
 plt.plot(volume_flow_v_dot_list, result_list_r_th_sa, label='Own implementation', color=hct.colors()["blue"])
+plt.plot(paper_comparison[:, 0], paper_comparison[:, 1], label='Paper', color=hct.colors()["red"], linestyle='--')
+plt.xlim([0.001, 0.014])
+plt.ylim([0, 2])
+
 plt.xlabel(r'Volume flow $\dot{V} \mathrm{/ (m^3/s)}$')
 plt.ylabel('Thermal resistance \n '
            r'$R_\mathrm{th,sa} \mathrm{/ (K/W)}$')

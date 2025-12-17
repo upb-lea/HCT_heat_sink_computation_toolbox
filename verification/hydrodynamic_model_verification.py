@@ -88,7 +88,7 @@ plt.plot(volume_flow_v_dot_list, result_list_delta_p_total, color=hct.colors()["
 # plt.plot(volume_flow_v_dot_list, result_list_delta_p_heat_sink, color=hct.colors()["gray"], label="heat_sink")
 # plt.plot(volume_flow_v_dot_list, acc_plot_line, color=hct.colors()["gray"], label="acc")
 # plt.plot(volume_flow_v_dot_list, duct_plot_line, color=hct.colors()["gray"], label="duct", linestyle='-.')
-plt.plot(paper_comparison[:, 0], paper_comparison[:, 1], color=hct.colors()["red"], label="Paper")
+plt.plot(paper_comparison[:, 0], paper_comparison[:, 1], color=hct.colors()["red"], label="Paper", linestyle='--')
 # plt.plot(paper_acc_line[:, 0], paper_acc_line[:, 1], color=hct.colors()["red"], label="Paper")
 # plt.plot(paper_heat_sink_line[:, 0], paper_heat_sink_line[:, 1], color=hct.colors()["red"], label="Paper")
 plt.legend()
