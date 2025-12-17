@@ -3,7 +3,8 @@ from hct import *
 
 def test_full_cooling_system_workflow():
     """Integration test for the full cooling system workflow."""
-    constants = init_constants()
+    temperature = 25
+    constants = init_constants(temperature)
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_cooling_channels_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
@@ -11,20 +12,21 @@ def test_full_cooling_system_workflow():
 
     r_th_sa = calc_final_r_th_s_a(geometry=geometry, constants=constants, t_ambient=25, volume_flow_v_dot=volume_flow_v_dot)
 
-    assert r_th_sa == 0.46442982872906496
+    assert r_th_sa == 0.4408799617308617
 
 def test_full_hydrodynamic_workflow():
     """Integration test for the full hydrodynamic workflow."""
+    temperature = 25
     geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_cooling_channels_n=5,
                         thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
     geometry.fin_distance_s = calc_fin_distance_s(geometry)
 
     fan_name = 'orion_od4010m.csv'
 
-    volume_flow, pressure = calc_volume_flow(fan_name, geometry, plot=False)
+    volume_flow, pressure = calc_volume_flow(temperature, fan_name, geometry, plot=False)
 
-    assert volume_flow == 0.002944221590149962
-    assert pressure == 6.463577383798171
+    assert volume_flow == 0.0029950559315553506
+    assert pressure == 5.935604526744401
 
 def test_calculate_intersection():
     """Unit test to check the intersection function."""
