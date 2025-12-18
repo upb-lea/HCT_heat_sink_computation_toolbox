@@ -25,15 +25,18 @@ print(f"{r_th_sa=}")
 
 
 r_th_sa_sweep_list = np.array([])
-volume_flow_sweep_list = np.linspace(0.002, 0.035)
+volume_flow_sweep_list = np.linspace(0, 0.035)
 for volume_flow_sweep in volume_flow_sweep_list:
     r_th_sa_sweep = hct.calc_final_r_th_s_a(geometry, constants, t_ambient, volume_flow_sweep)
     r_th_sa_sweep_list = np.append(r_th_sa_sweep_list, r_th_sa_sweep)
 
-plt.figure(figsize=tuple([x / 25.4 for x in figure_size]) if figure_size is not None else None, dpi=80)
+fig = plt.figure(figsize=tuple([x / 25.4 for x in figure_size]) if figure_size is not None else None, dpi=80)
 plt.plot(volume_flow_sweep_list, r_th_sa_sweep_list, color=hct.colors()["blue"])
 plt.xlabel("Volume flow / (m³/s)")
-plt.ylabel(r"$R_\mathrm{th}$ / (K/W)")
+plt.ylabel(r"$R_\mathrm{th,sa}$ / (K/W)")
+plt.xlim([0, 0.035])
+plt.ylim([0, 1.5])
 plt.grid()
 plt.tight_layout()
 plt.show()
+fig.savefig("heat_sink_volumeflow_rth.pdf")

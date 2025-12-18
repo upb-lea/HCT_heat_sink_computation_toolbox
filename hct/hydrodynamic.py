@@ -313,7 +313,7 @@ def calc_volume_flow(ambient_temperature: float, fan_name: str, geometry: Geomet
         fan_cubic_meter_second, result_list_delta_p_total, fan_pressure_drop_pascal)
 
     if plot:
-        plt.figure(figsize=tuple([x / 25.4 for x in figure_size]) if figure_size is not None else None, dpi=80)
+        fig = plt.figure(figsize=tuple([x / 25.4 for x in figure_size]) if figure_size is not None else None, dpi=80)
         plt.plot(fan_cubic_meter_second, np.array(result_list_delta_p_total), label=r'Heat sink', color=colors()["blue"])
         plt.plot(fan_cubic_meter_second, fan_pressure_drop_pascal, label="Fan", color=colors()["orange"])  # : {fan_name.replace('.csv', '')}
         plt.plot(intersection_volume_flow, intersection_pressure, color=colors()["red"], marker='o')
@@ -321,8 +321,10 @@ def calc_volume_flow(ambient_temperature: float, fan_name: str, geometry: Geomet
         plt.ylabel(r'Pressure drop $\Delta p$ / Pa')
         plt.grid()
         plt.legend()
+        # plt.xlim([0, 0.0035])
         plt.tight_layout()
         plt.show()
+        fig.savefig("heat_sink_volumeflow_pressuredrop.pdf")
 
     return intersection_volume_flow, intersection_pressure
 

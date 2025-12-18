@@ -440,32 +440,3 @@ def calc_weight_heat_sink(geometry: Geometry, constants: Constants) -> float:
     material_volume = boxed_volume - air_volume
     materiaL_weight = material_volume * constants.rho_material
     return materiaL_weight
-
-
-if __name__ == "__main__":
-    constants = init_constants()
-    geometry = Geometry(length_l=100e-3, width_b=40e-3, height_d=3e-3, height_c=30e-3, number_cooling_channels_n=5,
-                        thickness_fin_t=1e-3, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
-    geometry.fin_distance_s = calc_fin_distance_s(geometry)
-    print(geometry)
-
-    # plot parameter
-    volume_flow_v_dot_list = np.linspace(1e-3, 15e-3)
-
-    result_list_r_th_sa = []
-
-    for volume_flow_v_dot in volume_flow_v_dot_list:
-        r_th_sa = calc_final_r_th_s_a(geometry=geometry, constants=constants, t_ambient=25, volume_flow_v_dot=volume_flow_v_dot)
-
-        result_list_r_th_sa.append(r_th_sa)
-
-    paper_comparison = pd.read_csv('paper_r_th_model.csv', delimiter=';', decimal=',')
-    paper_comparison = paper_comparison.to_numpy()
-    print(paper_comparison)
-    plt.plot(paper_comparison[:, 0], paper_comparison[:, 1], label='paper')
-    plt.plot(volume_flow_v_dot_list, result_list_r_th_sa, label='calculation')
-    plt.xlabel('Volume flow')
-    plt.ylabel('R_th,sa (K/W)')
-    plt.legend()
-    plt.grid()
-    plt.show()
