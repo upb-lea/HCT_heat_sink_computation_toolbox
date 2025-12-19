@@ -324,7 +324,7 @@ def calc_volume_flow(ambient_temperature: float, fan_name: str, geometry: Geomet
         # plt.xlim([0, 0.0035])
         plt.tight_layout()
         plt.show()
-        fig.savefig("heat_sink_volumeflow_pressuredrop.pdf")
+        fig.savefig("heat_sink_volume_flow_vs_pressure_drop.pdf")
 
     return intersection_volume_flow, intersection_pressure
 
