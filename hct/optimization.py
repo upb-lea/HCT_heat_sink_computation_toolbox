@@ -38,10 +38,11 @@ class Optimization:
         length_l = trial.suggest_float("length_l", config.length_l_min_max_list[0], config.length_l_min_max_list[1])
         width_b = trial.suggest_float("width_b", config.width_b_min_max_list[0], config.width_b_min_max_list[1])
         thickness_fin_t = trial.suggest_float("thickness_fin_t", config.thickness_fin_t_min_max_list[0], config.thickness_fin_t_min_max_list[1])
-        number_fins_n = trial.suggest_int("number_cooling_channels_n", config.number_fins_n_min_max_list[0], config.number_fins_n_min_max_list[1])
+        number_cooling_channels_n = trial.suggest_int("number_cooling_channels_n", config.number_cooling_channels_n_min_max_list[0],
+                                                      config.number_cooling_channels_n_min_max_list[1])
 
         constants = init_constants(config.t_ambient)
-        geometry = Geometry(height_c=height_c, height_d=height_d, length_l=length_l, width_b=width_b, number_cooling_channels_n=number_fins_n,
+        geometry = Geometry(height_c=height_c, height_d=height_d, length_l=length_l, width_b=width_b, number_cooling_channels_n=number_cooling_channels_n,
                             thickness_fin_t=thickness_fin_t, fin_distance_s=0, alpha_rad=np.deg2rad(40), l_duct_min=5e-3)
         geometry.fin_distance_s = calc_fin_distance_s(geometry)
         if geometry.fin_distance_s <= 0.1e-3:
@@ -56,7 +57,7 @@ class Optimization:
             elif config.number_directions == 2:
                 return float('nan'), float('nan')
 
-            volume_flow_v_dot, pressure = calc_volume_flow(fan_name, geometry, plot=False)
+            volume_flow_v_dot, pressure = calc_volume_flow(config.t_ambient, fan_name, geometry, plot=False)
 
             if np.isnan(volume_flow_v_dot):
                 return float('nan'), float('nan')

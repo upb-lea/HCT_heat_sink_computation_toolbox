@@ -56,7 +56,7 @@ class OptimizationParameters:
     width_b_min_max_list: list
     length_l_min_max_list: list
     height_d_min_max_list: list
-    number_fins_n_min_max_list: list
+    number_cooling_channels_n_min_max_list: list
     thickness_fin_t_min_max_list: list
     fan_list: list
 

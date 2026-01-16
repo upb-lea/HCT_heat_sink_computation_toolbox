@@ -18,7 +18,7 @@ config = hct.OptimizationParameters(
     width_b_min_max_list=[0.02, 0.08],
     length_l_min_max_list=[0.08, 0.20],
     height_d_min_max_list=[0.001, 0.003],
-    number_fins_n_min_max_list=[5, 20],
+    number_cooling_channels_n_min_max_list=[5, 20],
     thickness_fin_t_min_max_list=[1e-3, 5e-3],
     fan_list=fan_list,
     t_ambient=40,
@@ -26,7 +26,7 @@ config = hct.OptimizationParameters(
     number_directions=3
 )
 
-# hct.Optimization.start_proceed_study(config=config, number_trials=10000)
+hct.Optimization.start_proceed_study(config=config, number_trials=1000)
 
 hct.global_plot_settings_font_latex()
 
