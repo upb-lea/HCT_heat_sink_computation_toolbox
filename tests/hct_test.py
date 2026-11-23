@@ -1,5 +1,6 @@
 """Unit and integration tests for the heat sink computing toolbox."""
 from hct import *
+import numpy as np
 
 def test_full_cooling_system_workflow():
     """Integration test for the full cooling system workflow."""
@@ -25,8 +26,8 @@ def test_full_hydrodynamic_workflow():
 
     volume_flow, pressure = calc_volume_flow(temperature, fan_name, geometry, plot=False)
 
-    assert volume_flow == 0.0029950559315553506
-    assert pressure == 5.935604526744401
+    np.testing.assert_almost_equal(volume_flow, 0.0029950559315553506)
+    np.testing.assert_almost_equal(pressure, 5.935604526744401)
 
 def test_calculate_intersection():
     """Unit test to check the intersection function."""
