@@ -400,14 +400,14 @@ def calc_duct_volume(geometry: Geometry, fan_name: str):
         min_width_height_heat_sink = geometry.height_c
     distance_heat_sink = (min_width_height_heat_sink / 2) / np.tan(geometry.alpha_rad / 2)
 
-    l_duct = distance_fan - distance_heat_sink
+    l_duct_real = distance_fan - distance_heat_sink
 
-    if l_duct < 0:
+    if l_duct_real < 0:
         raise ValueError("Fan too small.")
-    elif l_duct < geometry.l_duct_min:
-        l_duct = geometry.l_duct_min
+    elif l_duct_real < geometry.l_duct_min:
+        l_duct_real = geometry.l_duct_min
 
-    duct_volume = (fan_data.width_height + geometry.width_b) / 2 * (fan_data.width_height + geometry.height_c) / 2 * l_duct
+    duct_volume = (fan_data.width_height + geometry.width_b) / 2 * (fan_data.width_height + geometry.height_c) / 2 * l_duct_real
     return duct_volume
 
 
